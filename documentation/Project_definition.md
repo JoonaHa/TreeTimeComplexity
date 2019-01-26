@@ -3,7 +3,7 @@
 Projects aims to benchmark and illustrate differences between different kind of search trees and heaps. Also to present the advantages of different kind of structures for diffenret kind of data.
 
 ### Data Structures
-The intention is to implement **Binomial heaps**, **Fibonaci heaps**, **B-trees** and some classics like basic **Binary heaps** and **Red-black trees**.
+The intention is to implement **Binomial heaps**, **Fibonaci heaps** and some classics like basic **Binary heaps** and **Red-black trees**.
 The time complexity will be ranging from constant time or O(log n) to O(n).
 
 ### Input and Output
