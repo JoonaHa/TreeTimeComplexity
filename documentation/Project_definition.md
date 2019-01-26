@@ -9,7 +9,7 @@ The time complexity will be ranging from constant time or O(log n) to O(n) depen
 | *Opreation:*        | *Binary*   | *Fibonacci* | *Binomial* |
 | --------------------|:----------:|:-----------:|:----------:|
 | peek (return root)  |  O(1)      |  O(1)       | O(log n)   |
-| pop (delete root    |  O(log n)  |  O(log n)   | O(log n)   |
+| pop (delete root)   |  O(log n)  |  O(log n)   | O(log n)   |
 | insert              |  O(log n)  |  O(1)       | O(1)       |
 | decrease key        |  O(log n)  |  O(1)       | O(log n)   |
 | merge               |  O(n)      |  O(1)       | O(log n)   |
