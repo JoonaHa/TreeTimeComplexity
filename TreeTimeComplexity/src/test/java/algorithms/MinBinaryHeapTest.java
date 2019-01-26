@@ -16,6 +16,7 @@
  */
 package algorithms;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class MinBinaryHeapTest {
     @Before
     public void setUp() {
         items = new int[]{3, 2, 3, 4, 5, 9, 7, 8};
-        heap = new MinBinaryHeap();
+        heap = new MinBinaryHeap(new ArrayList<>());
 
         for (int i = 0; i < items.length; i++) {
             heap.insert(items[i]);
@@ -73,6 +74,20 @@ public class MinBinaryHeapTest {
 
         assertEquals(0, compare1);
         assertEquals(1, compare2);
+    }
+    
+        @Test
+    public void MinHeapKeepsItOrderAfterDelete() {
+
+        testItemsToHeap();
+        
+        heap.insert(0);
+        heap.delete(4);
+        
+        int compare = heap.peek();
+        
+            assertEquals(0, compare);
+        
     }
 
     private void testItemsToHeap() {

@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- *
+ * TODO Javafx palceholder template
  * @author JoonaHa
  */
 public class App extends Application {
