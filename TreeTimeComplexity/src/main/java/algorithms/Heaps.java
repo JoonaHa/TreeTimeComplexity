@@ -29,13 +29,22 @@ import java.util.ArrayList;
 public abstract class Heaps {
 
     protected final ArrayList<Integer> heap;
-
+    
     /**
-     *
-     * @param list to store the heap. Only accepts integers
+     * Create a empty dynamically sized heap
+     */
+    public Heaps() {
+        this.heap = new ArrayList<Integer>();
+    }
+
+    /**Create a Heap from a existing list.
+     * Remember to override in a extending class
+     * @param list Existing list that is changed to a heap.
      */
     public Heaps(ArrayList<Integer> list) {
         this.heap = list;
+
+
     }
 
     public int peek() {
@@ -43,26 +52,53 @@ public abstract class Heaps {
     }
 
     /**
-     * Abstract method to insert nodes. Implementation depends on the heap type.
+     * Tells if heap is empty.
      *
-     * @param insert Value to insert to the heap.
+     * @return A Boolean value, returns true if heap is empty.
      */
-    public abstract void insert(int insert);
+    public Boolean isEmpty() {
+        if (this.heap.size() != 0) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Tells the size of a heap
+     *
+     * @return Integer describing a heap's current size
+     */
+    public int size() {
+        return this.heap.size();
+    }
+
+    /**
+     * Abstract method to add nodes. Implementation depends on the heap type.
+     *
+     * @param insert Value to add to the heap.
+     */
+    public abstract void add(int insert);
 
     /**
      * Abstract method to delete a value from a given index. Implementation
      * depends on the heap type.
-     *
+     * @return removed node's value
      * @param index Index to delete a value from
      */
-    public abstract void delete(int index);
+    public abstract int delete(int index);
+
     /**
      * Abstract method that returns and delets the root node.
+     *
      * @return root node's key value
      */
     public abstract int pop();
 
-    /**Sifts a node down to it's right level to keep the heap property
+    /**
+     * Also somitems callded heapify. Sifts a node down to it's right level to
+     * keep the heap property
      *
      * @param index of a node that needs to be shifted
      */
@@ -70,6 +106,7 @@ public abstract class Heaps {
 
     /**
      * Sifts a node up to it's right level to keep the heap property
+     *
      * @param index of a node that needs to be shifted.
      */
     protected abstract void siftUp(int index);
@@ -174,4 +211,5 @@ public abstract class Heaps {
 
         return 2 * index + 2;
     }
+
 }

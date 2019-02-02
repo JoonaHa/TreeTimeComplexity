@@ -3,25 +3,34 @@ package algorithms;
 import java.util.ArrayList;
 
 /**
- *Min Binary Heap which extends abstract class Heaps
+ * Min Binary Heap which extends abstract class Heaps
+ *
  * @author JoonaHa
  */
 public class MinBinaryHeap extends Heaps {
 
-    public MinBinaryHeap(ArrayList<Integer> list) {
-        super(list);
+    public MinBinaryHeap() {
+        super();
+
     }
 
-    /**Inserts a value to the heap
-     * 
-     * @param insert 
+    public MinBinaryHeap(ArrayList<Integer> list) {
+        super(list);
+
+        createHeap();
+    }
+
+    /**
+     * Inserts a value to the heap
+     *
+     * @param insert
      */
     @Override
-    public void insert(int insert) {
+    public void add(int insert) {
 
-        // insert node to the end of the list and get the last index
+        // add node to the end of the list and get the last index
         this.heap.add(insert);
-        int last = this.heap.size() - 1;
+        int last = this.size() - 1;
         int index = last;
 
         //if the inserted node isn't the first note 
@@ -35,20 +44,23 @@ public class MinBinaryHeap extends Heaps {
 
     /**
      * Delete a node from given index and keep the heap in order
+     *
      * @param index of a node to be removed
      */
     @Override
-    public void delete(int index) {
-
+    public int delete(int index) {
+        
+        int value;
         // if index is root use  pop
         if (index == 0) {
+            value = heap.get(index);
             pop();
 
-        // else change the nodes value to -INF sort the heap and use pop to remove it    
+            // else change the nodes value to -INF sort the heap and use pop to remove it    
         } else {
-
-            int value = Integer.MIN_VALUE;
-            this.heap.set(index, value);
+            value = heap.get(index);
+            int min = Integer.MIN_VALUE;
+            this.heap.set(index, min);
 
             siftUp(index);
 
@@ -56,10 +68,12 @@ public class MinBinaryHeap extends Heaps {
 
         }
 
+        return value;
     }
 
     /**
      * Removes the node with the smallest value and returns it.
+     *
      * @return the smallest node of the heap
      */
     @Override
@@ -68,7 +82,7 @@ public class MinBinaryHeap extends Heaps {
         // save the root value
         int rootValue = this.heap.get(0);
 
-        int last = this.heap.size() - 1;
+        int last = this.size() - 1;
         //check if the root is the only node
         // else swap the root to the end of the heap, remove it
         if (last != 0) {
@@ -86,14 +100,16 @@ public class MinBinaryHeap extends Heaps {
 
     }
 
-    /**Sift down a node from the given index to it's proper level to sustain heap property
-     * 
+    /**
+     * Sift down a node from the given index to it's proper level to sustain
+     * heap property
+     *
      * @param index where to start the sifting
      */
     @Override
     protected void siftDown(int index) {
 
-        int last = this.heap.size() - 1;
+        int last = this.size() - 1;
         int value = this.heap.get(index);
 
         //swap the given node with one of its children downwards 
@@ -115,9 +131,11 @@ public class MinBinaryHeap extends Heaps {
             }
         }
     }
-    
- /**Sift up a node from the given index to it's proper level to sustain heap property
-     * 
+
+    /**
+     * Sift up a node from the given index to it's proper level to sustain heap
+     * property
+     *
      * @param index where to start the sifting
      */
     @Override
@@ -125,7 +143,7 @@ public class MinBinaryHeap extends Heaps {
 
         int value = this.heap.get(index);
         int parent = this.parent(index);
-        
+
         //swap node with its parent till its parent is smaller 
         //or the node is root
         while (index >= 0 && parent > value) {
@@ -136,6 +154,15 @@ public class MinBinaryHeap extends Heaps {
             parent = this.parent(index);
 
         }
+    }
+
+    private void createHeap() {
+        for (int i = parentIndex(size()); i >= 0; i--) {
+
+            siftDown(i);
+
+        }
+
     }
 
 }
