@@ -17,6 +17,8 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Random;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,17 +31,10 @@ import static org.junit.Assert.*;
 public class MinBinaryHeapTest {
 
     private int[] items;
-    private MinBinaryHeap heap;
 
     @Before
     public void setUp() {
         items = new int[]{3, 2, 3, 4, 5, 9, 7, 8};
-        heap = new MinBinaryHeap(new ArrayList<>());
-
-        for (int i = 0; i < items.length; i++) {
-            heap.insert(items[i]);
-
-        }
 
     }
 
@@ -48,54 +43,87 @@ public class MinBinaryHeapTest {
     }
 
     @Test
-    public void MinHeapKeepsItOrderAfterInsert() {
-        heap.insert(2);
-        heap.insert(7);
-        heap.insert(9);
-        heap.insert(14);
-        heap.insert(53);
-        heap.insert(1);
-        heap.insert(0);
-        int compare = heap.peek();
+    public void MinHeapCreateHeapFromExisitingList() {
+        ArrayList<Integer> data = createTestData(1000);
 
-        assertEquals(0, compare);
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            assertEquals((int) compHeap.poll(), testHeap.pop());
+
+        }
+
+    }
+
+    @Test
+    public void MinHeapKeepsItOrderAfterInsert() {
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(createTestData(1000));
+
+        MinBinaryHeap testHeap = new MinBinaryHeap(createTestData(1000));
+
+        testHeap.add(-1);
+        compHeap.add(-1);
+        assertEquals((int) compHeap.peek(), testHeap.peek());
+        testHeap.add(-1);
+        compHeap.add(-1);
+
+        testHeap.add(-1);
+        compHeap.add(-1);
+
+        assertEquals((int) compHeap.peek(), testHeap.peek());
+
     }
 
     @Test
     public void MinHeapKeepsItOrderAfterPop() {
 
-        testItemsToHeap();
-        
-        heap.insert(1);
-        heap.insert(0);
+        ArrayList<Integer> data = createTestData(1000);
 
-        int compare1 = heap.pop();
-        int compare2 = heap.peek();
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        assertEquals(0, compare1);
-        assertEquals(1, compare2);
-    }
-    
-        @Test
-    public void MinHeapKeepsItOrderAfterDelete() {
+        MinBinaryHeap testHeap = new MinBinaryHeap(data);
 
-        testItemsToHeap();
-        
-        heap.insert(0);
-        heap.delete(4);
-        
-        int compare = heap.peek();
-        
-            assertEquals(0, compare);
-        
-    }
+        for (int i = 0; i < data.size(); i++) {
 
-    private void testItemsToHeap() {
-
-        for (int i = 0; i < items.length; i++) {
-            heap.insert(items[i]);
+            assertEquals((int) compHeap.poll(), testHeap.pop());
 
         }
+
+    }
+
+    @Test
+    public void MinHeapKeepsItOrderAfterDelete() {
+
+        ArrayList<Integer> data = createTestData(1000);
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            int value = testHeap.delete(i);
+            compHeap.remove(value);
+            assertEquals((int) compHeap.peek(), testHeap.peek());
+
+        }
+
+    }
+
+    private ArrayList<Integer> createTestData(int size) {
+
+        ArrayList<Integer> values = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+
+            values.add(new Random().nextInt(Integer.MAX_VALUE));
+        }
+
+        return values;
     }
 
 }
