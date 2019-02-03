@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
-//apply plugin: 'checkstyle'
+apply plugin: 'checkstyle'
 jacocoTestReport {
     reports {
         xml.enabled = true
