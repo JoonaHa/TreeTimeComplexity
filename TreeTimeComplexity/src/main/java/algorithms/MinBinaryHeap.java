@@ -1,7 +1,6 @@
 package algorithms;
 
 import java.util.ArrayList;
-import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 
 /**
  * Min Binary Heap which extends abstract class Heaps
