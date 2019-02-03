@@ -30,11 +30,8 @@ import static org.junit.Assert.*;
  */
 public class MinBinaryHeapTest {
 
-    private int[] items;
-
     @Before
     public void setUp() {
-        items = new int[]{3, 2, 3, 4, 5, 9, 7, 8};
 
     }
 
@@ -108,6 +105,26 @@ public class MinBinaryHeapTest {
 
             int value = testHeap.delete(i);
             compHeap.remove(value);
+            assertEquals((int) compHeap.peek(), testHeap.peek());
+
+        }
+
+    }
+
+    @Test
+    public void MinHeapKeepsItOrderAfterDecreaseKey() {
+
+        ArrayList<Integer> data = createTestData(1000);
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            int value = testHeap.decreaseKey(i);
+            compHeap.remove(value);
+            compHeap.add(value - 1);
             assertEquals((int) compHeap.peek(), testHeap.peek());
 
         }

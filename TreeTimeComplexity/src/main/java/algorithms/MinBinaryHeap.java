@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
+import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 
 /**
  * Min Binary Heap which extends abstract class Heaps
@@ -49,7 +50,7 @@ public class MinBinaryHeap extends Heaps {
      */
     @Override
     public int delete(int index) {
-        
+
         int value;
         // if index is root use  pop
         if (index == 0) {
@@ -97,6 +98,22 @@ public class MinBinaryHeap extends Heaps {
         }
 
         return rootValue;
+
+    }
+
+    @Override
+    public int decreaseKey(int index) {
+
+        // Increment old value by one and update the node
+        int oldValue = this.heap.get(index);
+        this.heap.set(index, oldValue - 1);
+
+        // if node's parents value is greater siftUp to keep heap property
+        if (parent(index) > oldValue - 1) {
+            siftUp(index);
+        }
+
+        return oldValue;
 
     }
 

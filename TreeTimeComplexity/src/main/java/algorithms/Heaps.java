@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public abstract class Heaps {
 
     protected final ArrayList<Integer> heap;
-    
+
     /**
      * Create a empty dynamically sized heap
      */
@@ -37,13 +37,14 @@ public abstract class Heaps {
         this.heap = new ArrayList<Integer>();
     }
 
-    /**Create a Heap from a existing list.
-     * Remember to override in a extending class
+    /**
+     * Create a Heap from a existing list. Remember to override in a extending
+     * class
+     *
      * @param list Existing list that is changed to a heap.
      */
     public Heaps(ArrayList<Integer> list) {
         this.heap = list;
-
 
     }
 
@@ -84,6 +85,7 @@ public abstract class Heaps {
     /**
      * Abstract method to delete a value from a given index. Implementation
      * depends on the heap type.
+     *
      * @return removed node's value
      * @param index Index to delete a value from
      */
@@ -95,6 +97,14 @@ public abstract class Heaps {
      * @return root node's key value
      */
     public abstract int pop();
+
+    /**
+     * Decrease key by 1 form a given index. Return the old value of the key
+     *
+     * @param index where which value will be incremented
+     * @return value of the old key
+     */
+    public abstract int decreaseKey(int index);
 
     /**
      * Also somitems callded heapify. Sifts a node down to it's right level to
