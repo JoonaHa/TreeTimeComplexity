@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public abstract class Heaps {
 
-    protected final ArrayList<Integer> heap;
+    protected  ArrayList<Integer> heap;
 
     /**
      * Create a empty dynamically sized heap
