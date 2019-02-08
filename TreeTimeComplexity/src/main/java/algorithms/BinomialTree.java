@@ -53,12 +53,13 @@ public class BinomialTree {
 
     }
 
-    public ArrayList<BinomialTree> getChilds() {
+    public ArrayList<BinomialTree> getChildren() {
         return childs;
     }
 
     public void addChild(BinomialTree child) {
         this.childs.add(child);
+        child.setParent(this);
     }
 
     public BinomialTree getParent() {
@@ -73,9 +74,15 @@ public class BinomialTree {
         this.parent = parent;
     }
 
+    public void decreaseKey() {
+        this.key--;
+    }
+
     public void setKey(int key) {
         this.key = key;
     }
+    
+    
 
     public int getOrder() {
         return order;
