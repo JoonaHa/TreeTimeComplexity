@@ -16,64 +16,73 @@
  */
 package algorithms;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author JoonaHa
  */
 public class BinomialTree {
+
+    private int key;
+    private int order = 0;
+    private BinomialTree parent;
+    private ArrayList<BinomialTree> childs;
+
+    public BinomialTree(int value) {
+        this.key = value;
+        this.childs = new ArrayList<>();
+
+    }
+
+    public BinomialTree link(BinomialTree treeToBeLinked) {
+
+        if (this.getOrder() != treeToBeLinked.getOrder()) {
+            return null;
+        }
+
+        if (this.getKey() > treeToBeLinked.getKey()) {
+            treeToBeLinked.addChild(this);
+            treeToBeLinked.increaseDegree();
+            return treeToBeLinked;
+        } else {
+            this.addChild(treeToBeLinked);
+            this.increaseDegree();
+            return this;
+        }
+
+    }
+
+    public ArrayList<BinomialTree> getChilds() {
+        return childs;
+    }
+
+    public void addChild(BinomialTree child) {
+        this.childs.add(child);
+    }
+
+    public BinomialTree getParent() {
+        return parent;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setParent(BinomialTree parent) {
+        this.parent = parent;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public int getOrder() {
+        return order;
+    }
     
-       private class BinomialTreeNode {
-        private int key;
-        private int degree=0;
-        private BinomialTreeNode parent;
-        private BinomialTreeNode sibling;
-        private BinomialTreeNode child;
+    public void increaseDegree() {
+        this.order++;
+    }
 
-        public BinomialTreeNode(int value) {
-            this.key = value;
-
-        }
-
-        public BinomialTreeNode getChild() {
-            return child;
-        }
-
-        public BinomialTreeNode getParent() {
-            return parent;
-        }
-
-        public BinomialTreeNode getSibling() {
-            return sibling;
-        }
-
-        public int getKey() {
-            return key;
-        }
-
-        public void setChild(BinomialTreeNode child) {
-            this.child = child;
-        }
-
-        public void setParent(BinomialTreeNode parent) {
-            this.parent = parent;
-        }
-
-        public void setSibling(BinomialTreeNode sibling) {
-            this.sibling = sibling;
-        }
-
-        public void setKey(int key) {
-            this.key = key;
-        }
-        
-        
-        
-        
-        
-        
-        
-    
-    
-}
-    
 }

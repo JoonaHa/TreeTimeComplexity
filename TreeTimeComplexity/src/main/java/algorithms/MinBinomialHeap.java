@@ -17,30 +17,61 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  *
  * @author JoonaHa
  */
-public class MinBinomialHeap  {
-    private LinkedList<BinomialTree> heap;
+public class MinBinomialHeap {
+
+    private LinkedList<BinomialTree> roots;
+    private int size;
 
     public MinBinomialHeap() {
-        this.heap = new LinkedList<>();
+        this.roots = new LinkedList<>();
+        this.size = 0;
     }
-    
+
     public MinBinomialHeap(ArrayList<Integer> list) {
-        
-        
+
         //To DO createHeap();
     }
-    
-    
-    
-    
-    
-    
- 
-    
+
+    public void union(MinBinomialHeap otherHeap) {
+        for (BinomialTree tree : otherHeap.getTrees()) {
+            this.size += (int) Math.pow(tree.getOrder(), 2);
+
+            if (this.roots.get(tree.getOrder()) != null) {
+                this.roots.add(tree.getOrder(), tree);
+
+            } else {
+                this.roots.add(tree);
+            }
+        }
+        int index = 0;
+        BinomialTree prevX = null;
+        BinomialTree X = this.roots.get(index);
+        BinomialTree nextX = this.roots.get(index + 1);
+
+        while (nextX != null) {
+            if (X.getOrder() != nextX.getOrder()
+                    || this.roots.get(index + 2) != null
+                    && this.roots.get(index + 2).getOrder() == X.getOrder()) {
+                prevX = X;
+                X = nextX;
+            } else {
+                X.link(nextX);
+                this.roots.remove(index + 1);
+
+            }
+
+        }
+    }
+
+    public LinkedList<BinomialTree> getTrees() {
+        return this.roots;
+    }
+
 }
