@@ -47,6 +47,7 @@ public class MinBinomialHeap {
         MinBinomialHeap insert = new MinBinomialHeap();
         insert.inserNewNode(new BinomialTree(value));
         this.union(insert);
+        this.size++;
     }
 
     public int peek() {
@@ -58,18 +59,37 @@ public class MinBinomialHeap {
         int minIndex = findMinIndex();
         int min = roots.get(minIndex).getKey();
 
-        BinomialTree[] children = new BinomialTree[roots.get(minIndex).getChildren().size()];
-        children = roots.get(minIndex).getChildren().toArray(children);
+        if (roots.get(minIndex).hasChild()) {
 
-        roots.remove(minIndex);
+            BinomialTree child = roots.get(minIndex).getChild();
 
-        MinBinomialHeap heap = new MinBinomialHeap();
-        for (int i = 0; i < children.length; i++) {
-            heap.inserNewNode(children[i]);
+            roots.remove(minIndex);
 
+            MinBinomialHeap heap = new MinBinomialHeap();
+
+            heap.inserNewNode(child);
+
+            if (child.hasSibling()) {
+
+                BinomialTree sibling = child.getSibling();
+
+                while (sibling.hasSibling()) {
+                    heap.inserNewNode(sibling);
+                    BinomialTree old = sibling;
+
+                    if (!sibling.hasSibling()) {
+                        break;
+                    }
+
+                    sibling = sibling.getSibling();
+                    old.setSibling(null);
+
+                }
+            }
+
+            this.union(heap);
         }
 
-        this.union(heap);
         this.size--;
         return min;
 
@@ -85,12 +105,12 @@ public class MinBinomialHeap {
 
     public int decreaseKey(int index) {
 
-        BinomialTree decreseThis = findNodeFromIndex(index);
+        BinomialTree decreaseThis = findNodeFromIndex(index);
 
-        int oldaValue = decreseThis.getKey();
-        decreseThis.decreaseKey();
+        int oldaValue = decreaseThis.getKey();
+        decreaseThis.decreaseKey();
 
-        siftUp(decreseThis);
+        siftUp(decreaseThis);
 
         return oldaValue;
     }
@@ -112,7 +132,6 @@ public class MinBinomialHeap {
 
     private void union(MinBinomialHeap otherHeap) {
         for (BinomialTree tree : otherHeap.getTrees()) {
-            this.size += (int) Math.pow(2, tree.getOrder());
 
             if (roots.size() < tree.getOrder()) {
                 this.roots.add(tree.getOrder(), tree);
@@ -171,24 +190,24 @@ public class MinBinomialHeap {
             remainer += (int) Math.pow(2, this.roots.get(whichroot).getOrder());
             if (index - remainer > 0) {
                 whichroot++;
+            } else {
+                break;
             }
-            else break;
         }
-        
-        if (index -remainer == 0) {
+
+        if (index - remainer == 0) {
             return roots.get(whichroot++);
         }
-        System.out.println(index-remainer);
+        System.out.println(index - remainer);
         System.out.println((int) Math.pow(2, this.roots.get(whichroot).getOrder()));
-        int child = (int) (Math.pow(2, this.roots.get(whichroot).getOrder()) + (index-remainer)) -1;
+        int child = (int) (Math.pow(2, this.roots.get(whichroot).getOrder()) + (index - remainer)) - 1;
         System.out.println(child);
-        return roots.get(whichroot).getChildren().get(child);
-        
+        return roots.get(whichroot); //.getChildren().get(child);
+
     }
 
     protected void inserNewNode(BinomialTree newNode) {
         this.roots.add(newNode);
-        size += (int) Math.pow(2, newNode.getOrder());
     }
 
     protected void siftUp(BinomialTree node) {

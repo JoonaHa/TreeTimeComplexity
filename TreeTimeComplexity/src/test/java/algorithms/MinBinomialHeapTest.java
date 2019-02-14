@@ -80,8 +80,10 @@ public class MinBinomialHeapTest {
         MinBinomialHeap testHeap = new MinBinomialHeap(data);
 
         for (int i = 0; i < data.size(); i++) {
+            int comp = compHeap.poll();
+            int test = testHeap.pop();
 
-            assertEquals((int) compHeap.poll(), testHeap.pop());
+            assertEquals(comp, test);
 
         }
 

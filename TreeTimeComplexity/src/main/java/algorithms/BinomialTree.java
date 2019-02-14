@@ -16,7 +16,7 @@
  */
 package algorithms;
 
-import java.util.ArrayList;
+
 
 /**
  *
@@ -25,14 +25,14 @@ import java.util.ArrayList;
 public class BinomialTree {
 
     private int key;
-    private int order = 0;
+    private int order;
     private BinomialTree parent;
-    private ArrayList<BinomialTree> childs;
+    private BinomialTree child;
+    private BinomialTree sibling;
 
     public BinomialTree(int value) {
         this.key = value;
-        this.childs = new ArrayList<>();
-
+        this.order = 0;
     }
 
     public BinomialTree link(BinomialTree treeToBeLinked) {
@@ -42,24 +42,36 @@ public class BinomialTree {
         }
 
         if (this.getKey() > treeToBeLinked.getKey()) {
-            treeToBeLinked.addChild(this);
+            this.setParent(treeToBeLinked);
+            this.setSibling(treeToBeLinked.getChild());
+            treeToBeLinked.setChild(this);
             treeToBeLinked.increaseDegree();
             return treeToBeLinked;
         } else {
-            this.addChild(treeToBeLinked);
+            treeToBeLinked.setParent(this);
+            treeToBeLinked.setSibling(this.getChild());
+            this.setChild(treeToBeLinked);
             this.increaseDegree();
+
             return this;
         }
 
     }
 
-    public ArrayList<BinomialTree> getChildren() {
-        return childs;
+    public BinomialTree getChild() {
+        return child;
     }
 
-    public void addChild(BinomialTree child) {
-        this.childs.add(child);
-        child.setParent(this);
+    public void setChild(BinomialTree child) {
+        this.child = child;
+    }
+
+    public void setSibling(BinomialTree sibling) {
+        this.sibling = sibling;
+    }
+
+    public BinomialTree getSibling() {
+        return sibling;
     }
 
     public BinomialTree getParent() {
@@ -81,13 +93,27 @@ public class BinomialTree {
     public void setKey(int key) {
         this.key = key;
     }
-    
-    
 
     public int getOrder() {
         return order;
     }
-    
+
+    public Boolean hasSibling() {
+        if (this.sibling == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Boolean hasChild() {
+        if (this.child == null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void increaseDegree() {
         this.order++;
     }
