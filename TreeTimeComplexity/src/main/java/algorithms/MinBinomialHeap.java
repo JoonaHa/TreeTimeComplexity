@@ -18,7 +18,6 @@ package algorithms;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
 /**
  *
@@ -130,10 +129,10 @@ public class MinBinomialHeap {
     private void union(MinBinomialHeap otherHeap) {
         for (BinomialTree tree : otherHeap.getTrees()) {
 
-          roots.add(tree);
+            roots.add(tree);
         }
-        
-        Collections.sort(roots, (a,b) -> a.getOrder() < b.getOrder() ? -1 : a.getOrder() == b.getOrder() ? 0 :1);
+
+        Collections.sort(roots, (a, b) -> a.getOrder() < b.getOrder() ? -1 : a.getOrder() == b.getOrder() ? 0 : 1);
 
         int index = 0;
         int nextIndex = 1;
@@ -193,7 +192,6 @@ public class MinBinomialHeap {
         if (index - remainer == 0) {
             return roots.get(whichroot++);
         }
-
 
         int child = (int) (Math.pow(2, this.roots.get(whichroot).getOrder()) + (index - remainer)) - 1;
         return roots.get(whichroot); //.getChildren().get(child);
