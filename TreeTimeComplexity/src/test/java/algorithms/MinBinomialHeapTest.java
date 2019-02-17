@@ -89,7 +89,26 @@ public class MinBinomialHeapTest {
 
     }
 
+    @Test
+    public void MinHeapKeepsItOrderAfterDelete() {
 
+        ArrayList<Integer> data = createTestData(1000);
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+
+        for (int i = 0; i < data.size() - 1; i++) {
+
+            testHeap.delete(data.get(i));
+            compHeap.remove(data.get(i));
+
+            System.out.println((int) compHeap.peek() + "       " + testHeap.peek());
+            assertEquals((int) compHeap.peek(), testHeap.peek());
+
+        }
+
+    }
 
     @Test
     public void MinHeapKeepsItOrderAfterDecreaseKey() {
@@ -102,9 +121,9 @@ public class MinBinomialHeapTest {
 
         for (int i = 0; i < data.size(); i++) {
 
-            int value = testHeap.decreaseKey(i);
-            compHeap.remove(value);
-            compHeap.add(value - 1);
+            testHeap.decreaseKey(data.get(i));
+            compHeap.remove(data.get(i));
+            compHeap.add(data.get(i) - 1);
             assertEquals((int) compHeap.peek(), testHeap.peek());
 
         }

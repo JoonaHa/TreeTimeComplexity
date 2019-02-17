@@ -99,9 +99,9 @@ public class MinBinomialHeap {
         return size;
     }
 
-    public int decreaseKey(int index) {
+    public int decreaseKey(int value) {
 
-        BinomialTree decreaseThis = findNodeFromIndex(index);
+        BinomialTree decreaseThis = findNode(value);
 
         int oldaValue = decreaseThis.getKey();
         decreaseThis.decreaseKey();
@@ -111,9 +111,9 @@ public class MinBinomialHeap {
         return oldaValue;
     }
 
-    public int delete(int index) {
+    public int delete(int value) {
 
-        BinomialTree oldNode = findNodeFromIndex(index);
+        BinomialTree oldNode = findNode(value);
 
         int oldValue = oldNode.getKey();
 
@@ -172,30 +172,50 @@ public class MinBinomialHeap {
         return index;
     }
 
-    private BinomialTree findNodeFromIndex(int index) {
+    private BinomialTree findNode(int value) {
 
-        if (index == 0) {
-            return this.roots.get(0);
-        }
+        //Check roots first
+        for (int i = 0; i < roots.size(); i++) {
 
-        int whichroot = 0;
-        int remainer = 0;
-        while (whichroot < roots.size()) {
-            remainer += (int) Math.pow(2, this.roots.get(whichroot).getOrder());
-            if (index - remainer > 0) {
-                whichroot++;
-            } else {
-                break;
+            if (roots.get(i).getKey() == value) {
+                return roots.get(i);
             }
         }
 
-        if (index - remainer == 0) {
-            return roots.get(whichroot++);
+        //recurse if needed
+        BinomialTree ret = null;
+        for (int i = 0; i < roots.size(); i++) {
+
+            if (roots.get(i).getKey() < value) {
+
+                ret = recurseTree(value, roots.get(i));
+                if (ret != null) {
+                    break;
+                }
+
+            }
+
         }
 
-        int child = (int) (Math.pow(2, this.roots.get(whichroot).getOrder()) + (index - remainer)) - 1;
-        return roots.get(whichroot); //.getChildren().get(child);
+        return ret;
+    }
 
+    private BinomialTree recurseTree(int value, BinomialTree tree) {
+
+        if (tree == null) {
+            return null;
+        }
+
+        if (tree.getKey() == value) {
+            return tree;
+        }
+
+        BinomialTree child = recurseTree(value, tree.getChild());
+        if (child != null) {
+            return child;
+        }
+
+        return recurseTree(value, tree.getSibling());
     }
 
     protected void insertNewNode(BinomialTree newNode) {
@@ -213,7 +233,7 @@ public class MinBinomialHeap {
 
             swap(parent, node);
 
-            value = parent.getKey();
+            node = parent;
             parent = parent.getParent();
 
         }
@@ -222,10 +242,10 @@ public class MinBinomialHeap {
 
     protected void swap(BinomialTree a, BinomialTree b) {
 
-        BinomialTree temporary = a;
+        int temporary = a.getKey();
 
         a.setKey(b.getKey());
-        b.setKey(temporary.getKey());
+        b.setKey(temporary);
 
     }
 
