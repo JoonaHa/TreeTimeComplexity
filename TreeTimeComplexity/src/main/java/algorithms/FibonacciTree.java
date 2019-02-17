@@ -20,34 +20,47 @@ package algorithms;
  *
  * @author JoonaHa
  */
-public class BinomialTree {
+public class FibonacciTree {
 
     private int key;
-    private long order;
-    private BinomialTree parent;
-    private BinomialTree child;
-    private BinomialTree sibling;
+    private int order;
+    private FibonacciTree parent;
+    private FibonacciTree child;
+    private FibonacciTree right;
+    private FibonacciTree left;
 
-    public BinomialTree(int value) {
+    public FibonacciTree(int value) {
         this.key = value;
         this.order = 0;
     }
 
-    public BinomialTree link(BinomialTree treeToBeLinked) {
+    public FibonacciTree link(FibonacciTree treeToBeLinked) {
 
         if (this.getOrder() != treeToBeLinked.getOrder()) {
             return null;
         }
 
         if (this.getKey() > treeToBeLinked.getKey()) {
+
+            this.left.setRight(this.getRight());
+            this.right.setLeft(this.getLeft());
+
             this.setParent(treeToBeLinked);
-            this.setSibling(treeToBeLinked.getChild());
+            this.setLeft(treeToBeLinked.getChild());
+            this.setRight(treeToBeLinked.getChild().getLeft());
             treeToBeLinked.setChild(this);
             treeToBeLinked.increaseDegree();
             return treeToBeLinked;
+
         } else {
+
+            //remove from linked list
+            treeToBeLinked.left.setRight(treeToBeLinked.getRight());
+            treeToBeLinked.right.setLeft(treeToBeLinked.getLeft());
+
             treeToBeLinked.setParent(this);
-            treeToBeLinked.setSibling(this.getChild());
+            treeToBeLinked.setLeft(this.getChild());
+            treeToBeLinked.setRight(this.getChild().getLeft());
             this.setChild(treeToBeLinked);
             this.increaseDegree();
 
@@ -56,23 +69,31 @@ public class BinomialTree {
 
     }
 
-    public BinomialTree getChild() {
+    public FibonacciTree getChild() {
         return child;
     }
 
-    public void setChild(BinomialTree child) {
+    public void setChild(FibonacciTree child) {
         this.child = child;
     }
 
-    public void setSibling(BinomialTree sibling) {
-        this.sibling = sibling;
+    public void setRight(FibonacciTree sibling) {
+        this.right = sibling;
     }
 
-    public BinomialTree getSibling() {
-        return sibling;
+    public FibonacciTree getRight() {
+        return right;
     }
 
-    public BinomialTree getParent() {
+    public void setLeft(FibonacciTree leftSibling) {
+        this.left = leftSibling;
+    }
+
+    public FibonacciTree getLeft() {
+        return left;
+    }
+
+    public FibonacciTree getParent() {
         return parent;
     }
 
@@ -80,7 +101,7 @@ public class BinomialTree {
         return key;
     }
 
-    public void setParent(BinomialTree parent) {
+    public void setParent(FibonacciTree parent) {
         this.parent = parent;
     }
 
@@ -92,24 +113,8 @@ public class BinomialTree {
         this.key = key;
     }
 
-    public long getOrder() {
+    public int getOrder() {
         return order;
-    }
-
-    public Boolean hasSibling() {
-        if (this.sibling == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public Boolean hasChild() {
-        if (this.child == null) {
-            return false;
-        }
-
-        return true;
     }
 
     public void increaseDegree() {

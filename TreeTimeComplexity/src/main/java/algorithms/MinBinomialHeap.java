@@ -26,7 +26,7 @@ import java.util.Collections;
 public class MinBinomialHeap {
 
     private ArrayList<BinomialTree> roots;
-    private int size;
+    private long size;
 
     public MinBinomialHeap() {
         this.roots = new ArrayList<>();
@@ -95,7 +95,7 @@ public class MinBinomialHeap {
         return this.roots;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
