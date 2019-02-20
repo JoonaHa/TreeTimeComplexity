@@ -1,7 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Random;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -46,18 +44,6 @@ public class App extends Application {
     public static void main(String[] args) {
 
         launch(args);
-    }
-
-    private static ArrayList<Integer> createTestData(int size) {
-
-        ArrayList<Integer> values = new ArrayList<>();
-
-        for (int i = 0; i < size; i++) {
-
-            values.add(new Random().nextInt(9999));
-        }
-
-        return values;
     }
 
 }

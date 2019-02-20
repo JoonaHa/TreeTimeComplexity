@@ -50,6 +50,8 @@ public class FibonacciTree {
             this.setRight(treeToBeLinked.getChild().getLeft());
             treeToBeLinked.setChild(this);
             treeToBeLinked.increaseDegree();
+
+            increaseDegree();
             return treeToBeLinked;
 
         } else {
@@ -64,6 +66,7 @@ public class FibonacciTree {
             this.setChild(treeToBeLinked);
             this.increaseDegree();
 
+            increaseDegree();
             return this;
         }
 

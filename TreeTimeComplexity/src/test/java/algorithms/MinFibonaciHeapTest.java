@@ -19,7 +19,6 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,20 +26,17 @@ import static org.junit.Assert.*;
  *
  * @author JoonaHa
  */
-public class MinBinomialHeapTest {
+public class MinFibonaciHeapTest {
 
-    public MinBinomialHeapTest() {
+    public MinFibonaciHeapTest() {
     }
 
-    /**
-     * Test of add method, of class MinBinomialHeap.
-     */
     public void MinHeapCreateHeapFromExisitingList() {
         ArrayList<Integer> data = createTestData(1000);
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(data);
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -55,7 +51,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(createTestData(1000));
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(createTestData(1000));
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(createTestData(1000));
 
         testHeap.add(-1);
         compHeap.add(-1);
@@ -77,53 +73,13 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(data);
 
         for (int i = 0; i < data.size(); i++) {
             int comp = compHeap.poll();
             int test = testHeap.pop();
 
             assertEquals(comp, test);
-
-        }
-
-    }
-
-    @Test
-    public void MinHeapKeepsItOrderAfterDelete() {
-
-        ArrayList<Integer> data = createTestData(1000);
-
-        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
-
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
-
-        for (int i = 0; i < data.size() - 1; i++) {
-
-            testHeap.delete(data.get(i));
-            compHeap.remove(data.get(i));
-
-            assertEquals((int) compHeap.peek(), testHeap.peek());
-
-        }
-
-    }
-
-    @Test
-    public void MinHeapKeepsItOrderAfterDecreaseKey() {
-
-        ArrayList<Integer> data = createTestData(1000);
-
-        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
-
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
-
-        for (int i = 0; i < data.size(); i++) {
-
-            testHeap.decreaseKey(data.get(i));
-            compHeap.remove(data.get(i));
-            compHeap.add(data.get(i) - 1);
-            assertEquals((int) compHeap.peek(), testHeap.peek());
 
         }
 
