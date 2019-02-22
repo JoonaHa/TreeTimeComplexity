@@ -75,7 +75,8 @@ public class MinFibonaciHeap {
 
             smallest.getChild().setParent(null);
 
-            for (FibonacciTree node = smallest.getChild().getRight(); node != smallest.getChild(); node = node.getRight()) {
+            for (FibonacciTree node = smallest.getChild().getRight();
+                    node != smallest.getChild(); node = node.getRight()) {
                 node.setParent(null);
             }
 
@@ -99,7 +100,18 @@ public class MinFibonaciHeap {
 
         } else {
             mini = smallest.getRight();
+            System.out.println("else:" + mini.getKey());
+
+            for (FibonacciTree node = mini.getRight();
+                    node != mini; node = node.getRight()) {
+                System.out.println("before: " + node.getKey());
+            }
             consolidate();
+
+            for (FibonacciTree node = mini.getRight();
+                    node != mini; node = node.getRight()) {
+                System.out.println("after: " + node.getKey());
+            }
         }
 
         size--;
@@ -116,11 +128,9 @@ public class MinFibonaciHeap {
 
         FibonacciTree start = mini;
         FibonacciTree iterate = mini;
-        System.out.println(size);
 
         //log2(max_size) the most root notes that can possibly be.
         FibonacciTree[] nodes = new FibonacciTree[45];
-        System.out.println(nodes.length);
 
         do {
 
@@ -131,11 +141,12 @@ public class MinFibonaciHeap {
             int degree = x.getOrder();
 
             //if two trees with same degree link them.
-            while (nodes[degree] != null) {
+            while (degree < nodes.length && nodes[degree] != null) {
 
                 FibonacciTree temp = nodes[degree];
                 nodes[degree] = temp.link(x);
                 temp = nodes[degree].getChild();
+                x = nodes[degree];
 
                 if (temp == start) {
                     start = start.getRight();
@@ -147,7 +158,6 @@ public class MinFibonaciHeap {
 
                 nodes[degree] = null;
                 degree++;
-                System.out.println(degree);
 
             }
 
@@ -159,11 +169,16 @@ public class MinFibonaciHeap {
         mini = start;
 
         for (FibonacciTree n : nodes) {
+            if (n != null) {
+                System.out.println("mins:" + n.getKey());
+            }
             if (n != null && n.getKey() < mini.getKey()) {
                 mini = n;
 
             }
         }
+
+        System.out.println("Mimimiun" + mini.getKey());
     }
 
 }

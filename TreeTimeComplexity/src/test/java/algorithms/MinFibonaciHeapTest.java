@@ -75,7 +75,7 @@ public class MinFibonaciHeapTest {
 
         MinFibonaciHeap testHeap = new MinFibonaciHeap(data);
 
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size()-2; i++) {
             int comp = compHeap.poll();
             int test = testHeap.pop();
 

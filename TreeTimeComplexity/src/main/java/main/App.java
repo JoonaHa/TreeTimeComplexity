@@ -57,7 +57,7 @@ public class App extends Application {
         
         for (int i = 0; i < ts.size(); i++) {
             Integer get = test.pop();
-            System.out.println(get);
+            System.out.println("------------: "+ get);
             
         }
 

@@ -21,123 +21,127 @@ package algorithms;
  * @author JoonaHa
  */
 public class FibonacciTree {
-
+    
     private int key;
     private int order;
     private FibonacciTree parent;
     private FibonacciTree child;
     private FibonacciTree right;
     private FibonacciTree left;
-
+    
     public FibonacciTree(int value) {
         this.key = value;
         this.order = 0;
         this.right = this;
         this.left = this;
     }
-
+    
     public FibonacciTree link(FibonacciTree treeToBeLinked) {
-
+        
         if (this.getOrder() != treeToBeLinked.getOrder()) {
             return null;
         }
-
+        
         if (this.getKey() > treeToBeLinked.getKey()) {
-
+            
             this.left.setRight(this.getRight());
             this.right.setLeft(this.getLeft());
-
+            
+            this.setParent(treeToBeLinked);
+            
             if (treeToBeLinked.getChild() != null) {
-
-                this.setParent(treeToBeLinked);
+                
                 this.setLeft(treeToBeLinked.getChild());
-                this.setRight(treeToBeLinked.getChild().getLeft());
-                treeToBeLinked.setChild(this);
-
+                this.setRight(treeToBeLinked.getChild().getRight());
+                treeToBeLinked.getChild().setRight(this);
+                this.right.setLeft(this);
+                
             } else {
                 treeToBeLinked.setChild(this);
                 this.right = this;
                 this.left = this;
             }
-
+            
             treeToBeLinked.increaseDegree();
             return treeToBeLinked;
-
+            
         } else {
 
             //remove from linked list
             treeToBeLinked.getLeft().setRight(treeToBeLinked.getRight());
             treeToBeLinked.getRight().setLeft(treeToBeLinked.getLeft());
-
+            
+            treeToBeLinked.setParent(this);
+            
             if (this.getChild() != null) {
-
-                treeToBeLinked.setParent(this);
+                
                 treeToBeLinked.setLeft(this.getChild());
-                treeToBeLinked.setRight(this.getChild().getLeft());
-                this.setChild(treeToBeLinked);
-
+                treeToBeLinked.setRight(this.getChild().getRight());
+                this.getChild().setRight(treeToBeLinked);
+                treeToBeLinked.getRight().setLeft(treeToBeLinked);
+                
             } else {
                 this.setChild(treeToBeLinked);
                 treeToBeLinked.setRight(treeToBeLinked);
-               treeToBeLinked.setLeft(this);
+                treeToBeLinked.setLeft(treeToBeLinked);
             }
-
+            
             this.increaseDegree();
             return this;
         }
-
+        
     }
-
+    
     public FibonacciTree getChild() {
         return child;
     }
-
+    
     public void setChild(FibonacciTree child) {
         this.child = child;
     }
-
+    
     public void setRight(FibonacciTree sibling) {
         this.right = sibling;
     }
-
+    
     public FibonacciTree getRight() {
         return right;
     }
-
+    
     public void setLeft(FibonacciTree leftSibling) {
         this.left = leftSibling;
     }
-
+    
     public FibonacciTree getLeft() {
         return left;
     }
-
+    
     public FibonacciTree getParent() {
         return parent;
     }
-
+    
     public int getKey() {
         return key;
     }
-
+    
     public void setParent(FibonacciTree parent) {
         this.parent = parent;
     }
-
+    
     public void decreaseKey() {
         this.key--;
     }
-
+    
     public void setKey(int key) {
         this.key = key;
     }
-
+    
     public int getOrder() {
         return order;
     }
-
+    
     public void increaseDegree() {
         this.order++;
     }
-
+    
 }
