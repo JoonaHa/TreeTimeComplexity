@@ -50,6 +50,7 @@ public class App extends Application {
         ts.add(2);
         ts.add(3);
         ts.add(4);
+        ts.add(5);
 
         
         MinFibonaciHeap test = new MinFibonaciHeap(ts);

@@ -71,13 +71,11 @@ public class MinFibonaciHeap {
     public int pop() {
         FibonacciTree smallest = mini;
 
-        FibonacciTree child = mini.getChild();
-
         if (smallest.getChild() != null) {
 
             smallest.getChild().setParent(null);
 
-            for (FibonacciTree node = smallest.getChild().getRight(); node != child; node = node.getRight()) {
+            for (FibonacciTree node = smallest.getChild().getRight(); node != smallest.getChild(); node = node.getRight()) {
                 node.setParent(null);
             }
 
@@ -101,9 +99,9 @@ public class MinFibonaciHeap {
 
         } else {
             mini = smallest.getRight();
+            consolidate();
         }
 
-        consolidate();
         size--;
 
         return smallest.getKey();
@@ -126,20 +124,24 @@ public class MinFibonaciHeap {
 
         do {
 
+            FibonacciTree x = iterate;
+
             FibonacciTree nextIterate = iterate.getRight();
 
-            int degree = iterate.getOrder();
+            int degree = x.getOrder();
+
             //if two trees with same degree link them.
             while (nodes[degree] != null) {
 
                 FibonacciTree temp = nodes[degree];
-                nodes[degree] = temp.link(iterate);
+                nodes[degree] = temp.link(x);
+                temp = nodes[degree].getChild();
 
-                if (iterate == start) {
+                if (temp == start) {
                     start = start.getRight();
                 }
 
-                if (iterate == nextIterate) {
+                if (temp == nextIterate) {
                     nextIterate = nextIterate.getRight();
                 }
 
@@ -149,7 +151,7 @@ public class MinFibonaciHeap {
 
             }
 
-            nodes[degree] = iterate;
+            nodes[degree] = x;
 
             iterate = nextIterate;
         } while (iterate != start);
