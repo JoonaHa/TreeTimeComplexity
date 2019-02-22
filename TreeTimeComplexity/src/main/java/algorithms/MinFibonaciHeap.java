@@ -48,9 +48,7 @@ public class MinFibonaciHeap {
             newTree.setLeft(mini.getLeft());
             mini.setLeft(newTree);
 
-            if (newTree.getLeft() != null) {
-                newTree.getLeft().setRight(newTree);
-            }
+            newTree.getLeft().setRight(newTree);
 
             if (value < mini.getKey()) {
                 mini = newTree;
@@ -71,38 +69,44 @@ public class MinFibonaciHeap {
     }
 
     public int pop() {
-        int smallest = mini.getKey();
+        FibonacciTree smallest = mini;
 
         FibonacciTree child = mini.getChild();
 
-        if (child != null) {
+        if (smallest.getChild() != null) {
 
-            mini.getChild().setParent(null);
+            smallest.getChild().setParent(null);
+
+            for (FibonacciTree node = smallest.getChild().getRight(); node != child; node = node.getRight()) {
+                node.setParent(null);
+            }
 
             //raise child nodes to root list
             FibonacciTree minLeft = mini.getLeft();
-            mini.setLeft(child.getLeft());
+            FibonacciTree smallChildLeft = smallest.getChild().getLeft();
+            mini.setLeft(smallChildLeft);
 
-            if (child.getLeft() != null) {
-                child.getLeft().setRight(mini);
-                child.setLeft(minLeft);
-                minLeft.setRight(mini.getChild());
-            }
-
-            //remove mini from root list
-            if (mini.getLeft() != null) {
-                mini.getLeft().setRight(mini.getRight());
-            }
-
-            if (mini.getRight() != null) {
-                mini.getRight().setLeft(mini.getLeft());
-            }
+            smallChildLeft.setRight(mini);
+            smallest.getChild().setLeft(minLeft);
+            minLeft.setRight(smallest.getChild());
 
         }
 
-        consolidate();
+        //remove mini from root list
+        smallest.getLeft().setRight(smallest.getRight());
+        smallest.getRight().setLeft(smallest.getLeft());
 
-        return smallest;
+        if (smallest == smallest.getRight()) {
+            mini = null;
+
+        } else {
+            mini = smallest.getRight();
+        }
+
+        consolidate();
+        size--;
+
+        return smallest.getKey();
 
     }
 
@@ -112,52 +116,48 @@ public class MinFibonaciHeap {
 
     private void consolidate() {
 
-        FibonacciTree child = mini.getChild();
-        FibonacciTree start = child;
+        FibonacciTree start = mini;
+        FibonacciTree iterate = mini;
+        System.out.println(size);
 
-        FibonacciTree[] nodes = new FibonacciTree[(int) (Math.log(size) / Math.log(2))];
+        //log2(max_size) the most root notes that can possibly be.
+        FibonacciTree[] nodes = new FibonacciTree[45];
+        System.out.println(nodes.length);
 
-        while (start != null) {
+        do {
 
-            FibonacciTree x = start.getRight();
+            FibonacciTree nextIterate = iterate.getRight();
 
-            start.setParent(null);
+            int degree = iterate.getOrder();
+            //if two trees with same degree link them.
+            while (nodes[degree] != null) {
 
-            if (nodes[start.getOrder()] != null) {
+                FibonacciTree temp = nodes[degree];
+                nodes[degree] = temp.link(iterate);
 
-                FibonacciTree temp = nodes[start.getOrder()];
+                if (iterate == start) {
+                    start = start.getRight();
+                }
 
-                nodes[start.getOrder()] = temp.link(start);
-            } else {
-                nodes[start.getOrder()] = start;
+                if (iterate == nextIterate) {
+                    nextIterate = nextIterate.getRight();
+                }
+
+                nodes[degree] = null;
+                degree++;
+                System.out.println(degree);
+
             }
 
-            start = x;
-        }
+            nodes[degree] = iterate;
 
-        start = child;
+            iterate = nextIterate;
+        } while (iterate != start);
 
-        while (start != null) {
-
-            FibonacciTree x = start.getLeft();
-
-            start.setParent(null);
-
-            if (nodes[start.getOrder()] != null) {
-
-                FibonacciTree temp = nodes[start.getOrder()];
-
-                nodes[start.getOrder()] = temp.link(start);
-            } else {
-                nodes[start.getOrder()] = start;
-            }
-
-            //check for left also
-            start = x;
-        }
+        mini = start;
 
         for (FibonacciTree n : nodes) {
-            if (n != null && n.getKey() < child.getKey()) {
+            if (n != null && n.getKey() < mini.getKey()) {
                 mini = n;
 
             }

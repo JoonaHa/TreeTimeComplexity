@@ -1,5 +1,7 @@
 package main;
 
+import algorithms.MinFibonaciHeap;
+import java.util.ArrayList;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -42,8 +44,23 @@ public class App extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        ArrayList<Integer> ts = new ArrayList<>();
+        ts.add(1);
+        ts.add(2);
+        ts.add(3);
+        ts.add(4);
 
-        launch(args);
+        
+        MinFibonaciHeap test = new MinFibonaciHeap(ts);
+        
+        for (int i = 0; i < ts.size(); i++) {
+            Integer get = test.pop();
+            System.out.println(get);
+            
+        }
+
+       // launch(args);
     }
 
 }

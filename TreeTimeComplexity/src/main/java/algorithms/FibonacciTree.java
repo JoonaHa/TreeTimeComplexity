@@ -32,6 +32,8 @@ public class FibonacciTree {
     public FibonacciTree(int value) {
         this.key = value;
         this.order = 0;
+        this.right = this;
+        this.left = this;
     }
 
     public FibonacciTree link(FibonacciTree treeToBeLinked) {
@@ -45,28 +47,42 @@ public class FibonacciTree {
             this.left.setRight(this.getRight());
             this.right.setLeft(this.getLeft());
 
-            this.setParent(treeToBeLinked);
-            this.setLeft(treeToBeLinked.getChild());
-            this.setRight(treeToBeLinked.getChild().getLeft());
-            treeToBeLinked.setChild(this);
-            treeToBeLinked.increaseDegree();
+            if (treeToBeLinked.getChild() != null) {
 
-            increaseDegree();
+                this.setParent(treeToBeLinked);
+                this.setLeft(treeToBeLinked.getChild());
+                this.setRight(treeToBeLinked.getChild().getLeft());
+                treeToBeLinked.setChild(this);
+
+            } else {
+                treeToBeLinked.setChild(this);
+                this.right = this;
+                this.left = this;
+            }
+
+            treeToBeLinked.increaseDegree();
             return treeToBeLinked;
 
         } else {
 
             //remove from linked list
-            treeToBeLinked.left.setRight(treeToBeLinked.getRight());
-            treeToBeLinked.right.setLeft(treeToBeLinked.getLeft());
+            treeToBeLinked.getLeft().setRight(treeToBeLinked.getRight());
+            treeToBeLinked.getRight().setLeft(treeToBeLinked.getLeft());
 
-            treeToBeLinked.setParent(this);
-            treeToBeLinked.setLeft(this.getChild());
-            treeToBeLinked.setRight(this.getChild().getLeft());
-            this.setChild(treeToBeLinked);
+            if (this.getChild() != null) {
+
+                treeToBeLinked.setParent(this);
+                treeToBeLinked.setLeft(this.getChild());
+                treeToBeLinked.setRight(this.getChild().getLeft());
+                this.setChild(treeToBeLinked);
+
+            } else {
+                this.setChild(treeToBeLinked);
+                treeToBeLinked.setRight(treeToBeLinked);
+               treeToBeLinked.setLeft(this);
+            }
+
             this.increaseDegree();
-
-            increaseDegree();
             return this;
         }
 
