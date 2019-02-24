@@ -23,7 +23,7 @@ import java.util.Collections;
  *
  * @author JoonaHa
  */
-public class MinBinomialHeap {
+public class MinBinomialHeap extends Heaps {
 
     private ArrayList<BinomialTree> roots;
     private long size;
@@ -43,6 +43,7 @@ public class MinBinomialHeap {
 
     }
 
+    @Override
     public void add(int value) {
         MinBinomialHeap insert = new MinBinomialHeap();
         insert.insertNewNode(new BinomialTree(value));
@@ -50,11 +51,13 @@ public class MinBinomialHeap {
         this.size++;
     }
 
+    @Override
     public int peek() {
 
         return roots.get(findMinIndex()).getKey();
     }
 
+    @Override
     public int pop() {
         int minIndex = findMinIndex();
         BinomialTree min = roots.get(minIndex);
@@ -99,6 +102,7 @@ public class MinBinomialHeap {
         return size;
     }
 
+    @Override
     public int decreaseKey(int value) {
 
         BinomialTree decreaseThis = findNode(value);
@@ -111,6 +115,7 @@ public class MinBinomialHeap {
         return oldaValue;
     }
 
+    @Override
     public int delete(int value) {
 
         BinomialTree oldNode = findNode(value);
@@ -124,6 +129,13 @@ public class MinBinomialHeap {
         pop();
 
         return oldValue;
+    }
+
+    @Override
+    public void clear() {
+        this.roots = new ArrayList<>();
+        this.size = 0;
+
     }
 
     private void union(MinBinomialHeap otherHeap) {
@@ -218,11 +230,11 @@ public class MinBinomialHeap {
         return recurseTree(value, tree.getSibling());
     }
 
-    protected void insertNewNode(BinomialTree newNode) {
+    private void insertNewNode(BinomialTree newNode) {
         this.roots.add(newNode);
     }
 
-    protected void siftUp(BinomialTree node) {
+    private void siftUp(BinomialTree node) {
 
         int value = node.getKey();
         BinomialTree parent = node.getParent();
@@ -240,7 +252,7 @@ public class MinBinomialHeap {
 
     }
 
-    protected void swap(BinomialTree a, BinomialTree b) {
+    private void swap(BinomialTree a, BinomialTree b) {
 
         int temporary = a.getKey();
 
