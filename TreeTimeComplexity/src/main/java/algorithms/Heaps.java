@@ -60,5 +60,7 @@ public abstract class Heaps {
     public abstract int decreaseKey(int value);
     
     public abstract void clear();
+    
+    public abstract int getSize();
 
 }

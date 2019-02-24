@@ -103,7 +103,7 @@ public class MinBinaryHeapTest {
 
         for (int i = 0; i < data.size(); i++) {
 
-            int value = testHeap.delete(i);
+            int value = testHeap.delete(data.get(i));
             compHeap.remove(value);
             assertEquals((int) compHeap.peek(), testHeap.peek());
 
@@ -122,7 +122,7 @@ public class MinBinaryHeapTest {
 
         for (int i = 0; i < data.size(); i++) {
 
-            int value = testHeap.decreaseKey(i);
+            int value = testHeap.decreaseKey(data.get(i));
             compHeap.remove(value);
             compHeap.add(value - 1);
             assertEquals((int) compHeap.peek(), testHeap.peek());

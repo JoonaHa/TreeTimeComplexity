@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package App;
+package main;
 
 import algorithms.Heaps;
 import java.util.stream.LongStream;
@@ -51,9 +51,26 @@ public class Benchmark {
 
     }
 
+    public long[] testPeek() {
+        long[] times = new long[iterations];
+        for (int i = 0; i < iterations; i++) {
+            times[i] = runPeek();
+        }
+
+        long[] results = new long[3];
+
+        results[0] = findMin(times);
+        results[1] = findMax(times);
+        results[2] = LongStream.of(times).sum() / iterations;
+
+        return results;
+
+    }
+
     public long[] testPop() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
+
             times[i] = runPop();
         }
 
@@ -70,6 +87,7 @@ public class Benchmark {
     public long[] testDecreaseKey() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
+
             times[i] = runDecreaseKey();
         }
 
@@ -86,6 +104,7 @@ public class Benchmark {
     public long[] testDelete() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
+
             times[i] = runDelete();
         }
 
@@ -100,20 +119,26 @@ public class Benchmark {
     }
 
     private long runAdd() {
+        heap.clear();
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
-            heap.add(i);
+            heap.add(input[i]);
         }
 
         long end = System.nanoTime();
-
-        heap.clear();
 
         return end - start;
     }
 
     private long runPop() {
+
+        if (heap.getSize() != input.length) {
+            heap.clear();
+            for (int i = 0; i < input.length; i++) {
+                heap.add(input[i]);
+            }
+        }
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
@@ -123,49 +148,63 @@ public class Benchmark {
 
         long end = System.nanoTime();
 
-        heap.clear();
+        return end - start;
+    }
 
-        for (int i = 0; i < input.length; i++) {
-            heap.add(i);
+    private long runPeek() {
+
+        if (heap.getSize() != input.length) {
+            heap.clear();
+            for (int i = 0; i < input.length; i++) {
+                heap.add(input[i]);
+            }
         }
+        long start = System.nanoTime();
+
+        heap.peek();
+
+        long end = System.nanoTime();
 
         return end - start;
     }
 
     private long runDecreaseKey() {
+
+        heap.clear();
+        for (int i = 0; i < input.length; i++) {
+            heap.add(input[i]);
+        }
+
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
-            heap.decreaseKey(i);
+            heap.decreaseKey(input[i]);
 
         }
 
         long end = System.nanoTime();
-
-        heap.clear();
-
-        for (int i = 0; i < input.length; i++) {
-            heap.add(i);
-        }
 
         return end - start;
 
     }
 
     private long runDelete() {
+
+        if (heap.getSize() == 0) {
+            for (int i = 0; i < input.length; i++) {
+                heap.add(input[i]);
+            }
+        }
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
-            heap.delete(i);
+            heap.delete(input[i]);
 
         }
 
         long end = System.nanoTime();
 
         heap.clear();
-        for (int i = 0; i < input.length; i++) {
-            heap.add(i);
-        }
 
         return end - start;
 

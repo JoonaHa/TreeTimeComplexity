@@ -55,20 +55,18 @@ public class MinBinaryHeap extends Heaps {
     /**
      * Delete a node from given index and keep the heap in order
      *
-     * @param index of a node to be removed
+     * @param value of a node to be removed
      */
     @Override
-    public int delete(int index) {
+    public int delete(int value) {
 
-        int value;
+        int index = findIndex(value);
         // if index is root use  pop
         if (index == 0) {
-            value = heap.get(index);
             pop();
 
             // else change the nodes value to -INF sort the heap and use pop to remove it    
         } else {
-            value = heap.get(index);
             int min = Integer.MIN_VALUE;
             this.heap.set(index, min);
 
@@ -116,9 +114,10 @@ public class MinBinaryHeap extends Heaps {
     }
 
     @Override
-    public int decreaseKey(int index) {
+    public int decreaseKey(int value) {
 
         // Increment old value by one and update the node
+        int index = findIndex(value);
         int oldValue = this.heap.get(index);
         this.heap.set(index, oldValue - 1);
 
@@ -126,7 +125,6 @@ public class MinBinaryHeap extends Heaps {
         if (parent(index) > oldValue - 1) {
             siftUp(index);
         }
-
         return oldValue;
 
     }
@@ -302,6 +300,18 @@ public class MinBinaryHeap extends Heaps {
     private int rightChildIndex(int index) {
 
         return 2 * index + 2;
+    }
+
+    public int findIndex(int value) {
+
+        for (int i = 0; i < this.heap.size(); i++) {
+
+            if (this.heap.get(i) == value) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
 }
