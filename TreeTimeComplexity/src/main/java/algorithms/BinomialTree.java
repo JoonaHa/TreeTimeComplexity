@@ -23,7 +23,7 @@ package algorithms;
 public class BinomialTree {
 
     private int key;
-    private long order;
+    private int order;
     private BinomialTree parent;
     private BinomialTree child;
     private BinomialTree sibling;
@@ -92,7 +92,7 @@ public class BinomialTree {
         this.key = key;
     }
 
-    public long getOrder() {
+    public int getOrder() {
         return order;
     }
 

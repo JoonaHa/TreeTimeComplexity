@@ -29,9 +29,9 @@ public class Benchmark {
     private int[] input;
     private int iterations;
 
-    public Benchmark(Heaps heap, int iterations, int[] input) {
+    public Benchmark(Heaps heap, int iterations, int inputLenght) {
         this.heap = heap;
-        this.input = input;
+        this.input = createTestData(inputLenght);
         this.iterations = iterations;
     }
 
@@ -234,6 +234,21 @@ public class Benchmark {
         }
 
         return max;
+    }
+
+    //Generate pseudorandom testdata from lasta digits of system.nanotime()
+    private int[] createTestData(int size) {
+
+        int[] values = new int[size];
+
+        for (int i = 0; i < size; i++) {
+
+            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
+            System.out.println(values[i]);
+            System.out.println((System.nanoTime() % 10000 * 0.0001));
+        }
+
+        return values;
     }
 
 }

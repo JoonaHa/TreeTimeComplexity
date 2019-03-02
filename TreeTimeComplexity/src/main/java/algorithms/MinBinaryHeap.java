@@ -1,7 +1,5 @@
 package algorithms;
 
-import java.util.ArrayList;
-
 /**
  * Min Binary Heap which extends abstract class Heaps
  *
@@ -9,13 +7,13 @@ import java.util.ArrayList;
  */
 public class MinBinaryHeap extends Heaps {
 
-    private ArrayList<Integer> heap;
+    private GenericArrayList<Integer> heap;
 
     /**
      * Create a empty dynamically sized heap
      */
     public MinBinaryHeap() {
-        this.heap = new ArrayList<Integer>();
+        this.heap = new GenericArrayList<Integer>();
 
     }
 
@@ -24,7 +22,7 @@ public class MinBinaryHeap extends Heaps {
      *
      * @param list Existing list that is changed to a heap.
      */
-    public MinBinaryHeap(ArrayList<Integer> list) {
+    public MinBinaryHeap(GenericArrayList<Integer> list) {
         this.heap = list;
 
         createHeap();
@@ -61,6 +59,10 @@ public class MinBinaryHeap extends Heaps {
     public int delete(int value) {
 
         int index = findIndex(value);
+
+        if (index == -1) {
+            throw new IndexOutOfBoundsException("index -1");
+        }
         // if index is root use  pop
         if (index == 0) {
             pop();
@@ -81,7 +83,7 @@ public class MinBinaryHeap extends Heaps {
 
     @Override
     public int peek() {
-        return this.heap.get(0);
+        return (int) this.heap.get(0);
     }
 
     /**
@@ -93,7 +95,7 @@ public class MinBinaryHeap extends Heaps {
     public int pop() {
 
         // save the root value
-        int rootValue = this.heap.get(0);
+        int rootValue = (int) this.heap.get(0);
 
         int last = this.getSize() - 1;
         //check if the root is the only node
@@ -118,7 +120,7 @@ public class MinBinaryHeap extends Heaps {
 
         // Increment old value by one and update the node
         int index = findIndex(value);
-        int oldValue = this.heap.get(index);
+        int oldValue = (int) this.heap.get(index);
         this.heap.set(index, oldValue - 1);
 
         // if node's parents value is greater siftUp to keep heap property
@@ -140,7 +142,7 @@ public class MinBinaryHeap extends Heaps {
 
     @Override
     public void clear() {
-        this.heap = new ArrayList<Integer>();
+        this.heap = new GenericArrayList<Integer>();
 
     }
 
@@ -153,7 +155,7 @@ public class MinBinaryHeap extends Heaps {
     private void siftDown(int index) {
 
         int last = this.getSize() - 1;
-        int value = this.heap.get(index);
+        int value = (int) this.heap.get(index);
 
         //swap the given node with one of its children downwards 
         //till it's childrens have a greater value or the node is a leaf
@@ -183,7 +185,7 @@ public class MinBinaryHeap extends Heaps {
      */
     private void siftUp(int index) {
 
-        int value = this.heap.get(index);
+        int value = (int) this.heap.get(index);
         int parent = this.parent(index);
 
         //swap node with its parent till its parent is smaller 
@@ -208,7 +210,7 @@ public class MinBinaryHeap extends Heaps {
     }
 
     private int parent(int index) {
-        return this.heap.get((parentIndex(index)));
+        return (int) this.heap.get((parentIndex(index)));
     }
 
     /**
@@ -222,10 +224,10 @@ public class MinBinaryHeap extends Heaps {
 
         if (leftChildIndex(index) > this.heap.size() - 1) {
 
-            return this.heap.get(index);
+            return (int) this.heap.get(index);
         }
 
-        return this.heap.get(leftChildIndex(index));
+        return (int) this.heap.get(leftChildIndex(index));
     }
 
     /**
@@ -239,10 +241,10 @@ public class MinBinaryHeap extends Heaps {
 
         if (rightChildIndex(index) > this.heap.size() - 1) {
 
-            return this.heap.get(index);
+            return (int) this.heap.get(index);
         }
 
-        return this.heap.get(rightChildIndex(index));
+        return (int) this.heap.get(rightChildIndex(index));
     }
 
     /**
@@ -253,9 +255,9 @@ public class MinBinaryHeap extends Heaps {
      */
     private void swap(int index_a, int index_b) {
 
-        int temporary = this.heap.get(index_a);
+        int temporary = (int) this.heap.get(index_a);
 
-        this.heap.set(index_a, this.heap.get(index_b));
+        this.heap.set(index_a, (int) this.heap.get(index_b));
 
         this.heap.set(index_b, temporary);
 
@@ -306,7 +308,7 @@ public class MinBinaryHeap extends Heaps {
 
         for (int i = 0; i < this.heap.size(); i++) {
 
-            if (this.heap.get(i) == value) {
+            if ((int) this.heap.get(i) == value) {
                 return i;
             }
         }

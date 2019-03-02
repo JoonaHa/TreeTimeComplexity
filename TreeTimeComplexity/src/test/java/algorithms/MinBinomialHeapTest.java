@@ -40,7 +40,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinBinomialHeap testHeap = new MinBinomialHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -55,7 +55,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(createTestData(1000));
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(createTestData(1000));
+        MinBinomialHeap testHeap = new MinBinomialHeap(new GenericArrayList<>(createTestData(1000)));
 
         testHeap.add(-1);
         compHeap.add(-1);
@@ -77,7 +77,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinBinomialHeap testHeap = new MinBinomialHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
             int comp = compHeap.poll();
@@ -96,7 +96,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinBinomialHeap testHeap = new MinBinomialHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size() - 1; i++) {
 
@@ -116,7 +116,7 @@ public class MinBinomialHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinomialHeap testHeap = new MinBinomialHeap(data);
+        MinBinomialHeap testHeap = new MinBinomialHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
 

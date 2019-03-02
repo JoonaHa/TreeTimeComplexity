@@ -45,7 +45,7 @@ public class MinBinaryHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+        MinBinaryHeap testHeap = new MinBinaryHeap(new GenericArrayList(data));
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -60,7 +60,7 @@ public class MinBinaryHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(createTestData(1000));
 
-        MinBinaryHeap testHeap = new MinBinaryHeap(createTestData(1000));
+        MinBinaryHeap testHeap = new MinBinaryHeap(new GenericArrayList<>(createTestData(1000)));
 
         testHeap.add(-1);
         compHeap.add(-1);
@@ -82,7 +82,7 @@ public class MinBinaryHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+        MinBinaryHeap testHeap = new MinBinaryHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -99,9 +99,9 @@ public class MinBinaryHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinaryHeap testHeap = new MinBinaryHeap(data);
-
-        for (int i = 0; i < data.size(); i++) {
+        MinBinaryHeap testHeap = new MinBinaryHeap(new GenericArrayList<>(data));
+        //TODO check later
+        for (int i = 0; i < data.size() - 1; i++) {
 
             int value = testHeap.delete(data.get(i));
             compHeap.remove(value);
@@ -118,7 +118,7 @@ public class MinBinaryHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinBinaryHeap testHeap = new MinBinaryHeap(data);
+        MinBinaryHeap testHeap = new MinBinaryHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
 
