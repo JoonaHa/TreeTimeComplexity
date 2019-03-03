@@ -16,7 +16,7 @@
  */
 package main;
 
-import algorithms.Heaps;
+import algorithms.MinHeaps;
 import java.util.stream.LongStream;
 
 /**
@@ -25,11 +25,11 @@ import java.util.stream.LongStream;
  */
 public class Benchmark {
 
-    private Heaps heap;
+    private MinHeaps heap;
     private int[] input;
     private int iterations;
 
-    public Benchmark(Heaps heap, int iterations, int inputLenght) {
+    public Benchmark(MinHeaps heap, int iterations, int inputLenght) {
         this.heap = heap;
         this.input = createTestData(inputLenght);
         this.iterations = iterations;
@@ -244,8 +244,6 @@ public class Benchmark {
         for (int i = 0; i < size; i++) {
 
             values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
-            System.out.println(values[i]);
-            System.out.println((System.nanoTime() % 10000 * 0.0001));
         }
 
         return values;

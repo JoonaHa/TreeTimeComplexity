@@ -24,7 +24,7 @@ package algorithms;
  *
  * @author JoonaHa
  */
-public abstract class Heaps {
+public abstract class MinHeaps {
 
     public abstract int peek();
 
@@ -40,9 +40,9 @@ public abstract class Heaps {
      * depends on the heap type.
      *
      * @return removed node's value
-     * @param index Index to delete a value from
+     * @param value value to delete a value from
      */
-    public abstract int delete(int index);
+    public abstract int delete(int value);
 
     /**
      * Abstract method that returns and delets the root node.
@@ -58,9 +58,9 @@ public abstract class Heaps {
      * @return value of the old key
      */
     public abstract int decreaseKey(int value);
-    
+
     public abstract void clear();
-    
+
     public abstract int getSize();
 
 }

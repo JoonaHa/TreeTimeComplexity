@@ -20,7 +20,7 @@ package algorithms;
  *
  * @author JoonaHa
  */
-public class MinBinomialHeap extends Heaps {
+public class MinBinomialHeap extends MinHeaps {
 
     private GenericArrayList<BinomialTreeDemo> roots;
     private int size;
@@ -197,7 +197,7 @@ public class MinBinomialHeap extends Heaps {
         return index;
     }
 
-    private BinomialTreeDemo findNode(int value) {
+    public BinomialTreeDemo findNode(int value) {
 
         //Check roots first
         for (int i = 0; i < roots.size(); i++) {

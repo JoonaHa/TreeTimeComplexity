@@ -16,29 +16,29 @@
  */
 package algorithms;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author JoonaHa
  */
-public class MinFibonaciHeap {
+public class MinFibonaciHeap extends MinHeaps {
 
     private FibonacciTree mini;
-    private long size;
+    private int size;
 
     public MinFibonaciHeap() {
         this.size = 0;
     }
 
-    public MinFibonaciHeap(ArrayList<Integer> value) {
+    public MinFibonaciHeap(GenericArrayList<Integer> values) {
         this.size = 0;
 
-        for (Integer integer : value) {
-            this.add(integer);
+        for (int i = 0; i < values.size(); i++) {
+            add(values.get(i));
+
         }
     }
 
+    @Override
     public void add(int value) {
 
         FibonacciTree newTree = new FibonacciTree(value);
@@ -64,10 +64,12 @@ public class MinFibonaciHeap {
 
     }
 
+    @Override
     public int peek() {
         return mini.getKey();
     }
 
+    @Override
     public int pop() {
         FibonacciTree smallest = mini;
 
@@ -100,18 +102,8 @@ public class MinFibonaciHeap {
 
         } else {
             mini = smallest.getRight();
-            System.out.println("else:" + mini.getKey());
 
-            for (FibonacciTree node = mini.getRight();
-                    node != mini; node = node.getRight()) {
-                System.out.println("before: " + node.getKey());
-            }
             consolidate();
-
-            for (FibonacciTree node = mini.getRight();
-                    node != mini; node = node.getRight()) {
-                System.out.println("after: " + node.getKey());
-            }
         }
 
         size--;
@@ -120,8 +112,62 @@ public class MinFibonaciHeap {
 
     }
 
-    public long getSize() {
+    @Override
+    public int getSize() {
         return size;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public int decreaseKey(int value) {
+        FibonacciTree node = findNode(value);
+
+//        if (node == null) {
+//            throw new NoSuchFieldError("No shuch value");
+//        }
+
+        node.decreaseKey();
+        FibonacciTree parent = node.getParent();
+
+        siftUp(node, parent);
+        return value;
+    }
+
+    @Override
+    public int delete(int value) {
+        FibonacciTree node = findNode(value);
+
+        node.setKey(Integer.MIN_VALUE);
+
+        siftUp(node, node.getParent());
+
+        pop();
+
+        return value;
+
+    }
+
+    public FibonacciTree findNode(int value) {
+        FibonacciTree start = mini;
+        FibonacciTree iterate = start.getRight();
+
+        if (mini.getKey() == value) {
+            return mini;
+        }
+        while (iterate != start) {
+
+            if (iterate.getKey() == value) {
+                return iterate;
+            }
+
+            iterate = iterate.getRight();
+        }
+
+        return null;
     }
 
     private void consolidate() {
@@ -141,12 +187,15 @@ public class MinFibonaciHeap {
             int degree = x.getOrder();
 
             //if two trees with same degree link them.
-            while (degree < nodes.length && nodes[degree] != null) {
+            while (nodes[degree] != null) {
 
                 FibonacciTree temp = nodes[degree];
-                nodes[degree] = temp.link(x);
-                temp = nodes[degree].getChild();
-                x = nodes[degree];
+
+                if (x.getKey() > temp.getKey()) {
+                    FibonacciTree t = temp;
+                    temp = x;
+                    x = t;
+                }
 
                 if (temp == start) {
                     start = start.getRight();
@@ -170,7 +219,6 @@ public class MinFibonaciHeap {
 
         for (FibonacciTree n : nodes) {
             if (n != null) {
-                System.out.println("mins:" + n.getKey());
             }
             if (n != null && n.getKey() < mini.getKey()) {
                 mini = n;
@@ -178,7 +226,18 @@ public class MinFibonaciHeap {
             }
         }
 
-        System.out.println("Mimimiun" + mini.getKey());
+    }
+
+    private void siftUp(FibonacciTree current, FibonacciTree parent) {
+        if (parent != null && current.getKey() < parent.getKey()) {
+            parent.cut(current, mini);
+            parent.cascadingCut(mini);
+        }
+
+        if (current.getKey() < mini.getKey()) {
+            mini = current;
+        }
+
     }
 
 }

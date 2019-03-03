@@ -1,11 +1,11 @@
 package algorithms;
 
 /**
- * Min Binary Heap which extends abstract class Heaps
+ * Min Binary Heap which extends abstract class MinHeaps
  *
  * @author JoonaHa
  */
-public class MinBinaryHeap extends Heaps {
+public class MinBinaryHeap extends MinHeaps {
 
     private GenericArrayList<Integer> heap;
 
@@ -58,7 +58,7 @@ public class MinBinaryHeap extends Heaps {
     @Override
     public int delete(int value) {
 
-        int index = findIndex(value);
+        int index = findNode(value);
 
         if (index == -1) {
             throw new IndexOutOfBoundsException("index -1");
@@ -119,7 +119,7 @@ public class MinBinaryHeap extends Heaps {
     public int decreaseKey(int value) {
 
         // Increment old value by one and update the node
-        int index = findIndex(value);
+        int index = findNode(value);
         int oldValue = (int) this.heap.get(index);
         this.heap.set(index, oldValue - 1);
 
@@ -304,7 +304,7 @@ public class MinBinaryHeap extends Heaps {
         return 2 * index + 2;
     }
 
-    public int findIndex(int value) {
+    public int findNode(int value) {
 
         for (int i = 0; i < this.heap.size(); i++) {
 

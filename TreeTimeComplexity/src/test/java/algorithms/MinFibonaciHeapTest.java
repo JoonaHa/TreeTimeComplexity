@@ -36,7 +36,7 @@ public class MinFibonaciHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinFibonaciHeap testHeap = new MinFibonaciHeap(data);
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(new GenericArrayList<>(data));
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -51,7 +51,7 @@ public class MinFibonaciHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(createTestData(1000));
 
-        MinFibonaciHeap testHeap = new MinFibonaciHeap(createTestData(1000));
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(new GenericArrayList<>(createTestData(1000)));
 
         testHeap.add(-1);
         compHeap.add(-1);
@@ -73,13 +73,53 @@ public class MinFibonaciHeapTest {
 
         PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
 
-        MinFibonaciHeap testHeap = new MinFibonaciHeap(data);
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(new GenericArrayList<>(data));
 
-        for (int i = 0; i < data.size()-2; i++) {
+        for (int i = 0; i < data.size() - 2; i++) {
             int comp = compHeap.poll();
             int test = testHeap.pop();
 
             assertEquals(comp, test);
+
+        }
+
+    }
+
+    @Test
+    public void MinHeapKeepsItOrderAfterDecreaseKey() {
+
+        ArrayList<Integer> data = createTestData(1000);
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(new GenericArrayList<>(data));
+
+        for (int i = 0; i < data.size(); i++) {
+
+            testHeap.decreaseKey(data.get(i));
+            compHeap.remove(data.get(i));
+            compHeap.add(data.get(i) - 1);
+            assertEquals((int) compHeap.peek(), testHeap.peek());
+
+        }
+
+    }
+
+    @Test
+    public void MinHeapKeepsItOrderAfterDelete() {
+
+        ArrayList<Integer> data = createTestData(1000);
+
+        PriorityQueue<Integer> compHeap = new PriorityQueue<>(data);
+
+        MinFibonaciHeap testHeap = new MinFibonaciHeap(new GenericArrayList<>(data));
+
+        for (int i = 0; i < data.size() - 1; i++) {
+
+            testHeap.delete(data.get(i));
+            compHeap.remove(data.get(i));
+
+            assertEquals((int) compHeap.peek(), testHeap.peek());
 
         }
 

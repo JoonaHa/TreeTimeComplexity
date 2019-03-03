@@ -2,6 +2,7 @@ package main;
 
 import algorithms.MinBinaryHeap;
 import algorithms.MinBinomialHeap;
+import algorithms.MinFibonaciHeap;
 import java.util.Arrays;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -63,7 +64,15 @@ public class App extends Application {
         series2.getData().add(new XYChart.Data<>("pop", new Benchmark(new MinBinomialHeap(), 100, 1000).testPop()[2] / 1000));
         series2.getData().add(new XYChart.Data<>("decrease key", new Benchmark(new MinBinomialHeap(), 100, 1000).testDecreaseKey()[2] / 1000));
 
-        barchart.getData().addAll(series1, series2);
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        series3.setName("FibonacciHeap");
+        series3.getData().add(new XYChart.Data<>("peek", new Benchmark(new MinFibonaciHeap(), 100, 1000).testPeek()[2] / 1000));
+        series3.getData().add(new XYChart.Data<>("add", new Benchmark(new MinFibonaciHeap(), 100, 1000).testAdd()[2] / 1000));
+        series3.getData().add(new XYChart.Data<>("delete", new Benchmark(new MinFibonaciHeap(), 100, 1000).testDelete()[2] / 1000));
+        series3.getData().add(new XYChart.Data<>("pop", new Benchmark(new MinFibonaciHeap(), 100, 1000).testPop()[2] / 1000));
+        series3.getData().add(new XYChart.Data<>("decrease key", new Benchmark(new MinFibonaciHeap(), 100, 1000).testDecreaseKey()[2] / 1000));
+
+        barchart.getData().addAll(series1, series2, series3);
 
         root.getChildren().add(barchart);
         Scene scene = new Scene(root, 300, 250);
@@ -79,7 +88,6 @@ public class App extends Application {
     public static void main(String[] args) {
 
         launch(args);
-
     }
 
 }
