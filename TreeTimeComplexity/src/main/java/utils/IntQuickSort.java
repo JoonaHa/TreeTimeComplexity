@@ -20,7 +20,7 @@ package utils;
  *
  * @author JoonaHa
  */
-public class IntCountingSort {
+public class IntQuickSort {
 
     public static int[] quickSortDescen(int[] input, int start, int end) {
 

@@ -121,6 +121,8 @@ public class MinFibonaciHeap extends MinHeaps {
 
     @Override
     public void clear() {
+        this.mini = null;
+        this.size = 0;
 
     }
 

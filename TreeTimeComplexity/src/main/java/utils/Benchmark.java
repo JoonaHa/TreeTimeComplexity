@@ -248,10 +248,10 @@ public class Benchmark {
         }
 
         if (this.sorting.equals(InputTypes.ASCENDING)) {
-            values = IntCountingSort.quickSortAscend(values, 0, size - 1);
+            values = IntQuickSort.quickSortAscend(values, 0, size - 1);
         }
         if (this.sorting.equals(InputTypes.DESCENDING)) {
-            values = IntCountingSort.quickSortDescen(values, 0, size - 1);
+            values = IntQuickSort.quickSortDescen(values, 0, size - 1);
 
         }
 
