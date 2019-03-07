@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package main;
+package utils;
 
 import algorithms.MinHeaps;
 import java.util.stream.LongStream;
@@ -28,11 +28,13 @@ public class Benchmark {
     private MinHeaps heap;
     private int[] input;
     private int iterations;
+    private InputTypes sorting;
 
-    public Benchmark(MinHeaps heap, int iterations, int inputLenght) {
+    public Benchmark(MinHeaps heap, int iterations, int inputLenght, InputTypes sorting) {
         this.heap = heap;
-        this.input = createTestData(inputLenght);
         this.iterations = iterations;
+        this.sorting = sorting;
+        this.input = createTestData(inputLenght);
     }
 
     public long[] testAdd() {
@@ -120,6 +122,10 @@ public class Benchmark {
 
     private long runAdd() {
         heap.clear();
+        for (int i = 0; i < input.length; i++) {
+            heap.add(input[i]);
+        }
+
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
@@ -133,11 +139,9 @@ public class Benchmark {
 
     private long runPop() {
 
-        if (heap.getSize() != input.length) {
-            heap.clear();
-            for (int i = 0; i < input.length; i++) {
-                heap.add(input[i]);
-            }
+        heap.clear();
+        for (int i = 0; i < input.length; i++) {
+            heap.add(input[i]);
         }
         long start = System.nanoTime();
 
@@ -153,12 +157,11 @@ public class Benchmark {
 
     private long runPeek() {
 
-        if (heap.getSize() != input.length) {
-            heap.clear();
-            for (int i = 0; i < input.length; i++) {
-                heap.add(input[i]);
-            }
+        heap.clear();
+        for (int i = 0; i < input.length; i++) {
+            heap.add(input[i]);
         }
+
         long start = System.nanoTime();
 
         heap.peek();
@@ -190,11 +193,11 @@ public class Benchmark {
 
     private long runDelete() {
 
-        if (heap.getSize() == 0) {
-            for (int i = 0; i < input.length; i++) {
-                heap.add(input[i]);
-            }
+        heap.clear();
+        for (int i = 0; i < input.length; i++) {
+            heap.add(input[i]);
         }
+
         long start = System.nanoTime();
 
         for (int i = 0; i < input.length; i++) {
@@ -203,8 +206,6 @@ public class Benchmark {
         }
 
         long end = System.nanoTime();
-
-        heap.clear();
 
         return end - start;
 
@@ -243,7 +244,15 @@ public class Benchmark {
 
         for (int i = 0; i < size; i++) {
 
-            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
+            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE - 10));
+        }
+
+        if (this.sorting.equals(InputTypes.ASCENDING)) {
+            values = IntCountingSort.quickSortAscend(values, 0, size - 1);
+        }
+        if (this.sorting.equals(InputTypes.DESCENDING)) {
+            values = IntCountingSort.quickSortDescen(values, 0, size - 1);
+
         }
 
         return values;

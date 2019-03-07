@@ -73,6 +73,15 @@ public class FibonacciTree {
 
         if (parent != null) {
 
+            if (this.isMarked()) {
+                
+                parent.cut(this, mini);
+                parent.cascadingCut(mini);
+                
+            } else {
+                this.marked = true;
+            }
+
         }
     }
 
@@ -84,7 +93,7 @@ public class FibonacciTree {
         if (this.order == 0) {
             this.child = null;
         } else if (this.child == start) {
-            this.child = start.right;
+            this.child = start.getRight();
         }
 
         start.setRight(mini);

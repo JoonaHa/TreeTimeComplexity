@@ -16,6 +16,7 @@
  */
 package algorithms;
 
+import utils.GenericArrayList;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;

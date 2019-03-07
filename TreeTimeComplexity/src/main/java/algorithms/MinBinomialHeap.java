@@ -16,6 +16,8 @@
  */
 package algorithms;
 
+import utils.GenericArrayList;
+
 /**
  *
  * @author JoonaHa
@@ -283,21 +285,22 @@ public class MinBinomialHeap extends MinHeaps {
             }
         }
 
-        int[] histogram = new int[max + 1];
-
+        int[] counts = new int[max + 1];
         for (int i = 0; i < trees.length; i++) {
-            histogram[trees[i].getOrder()]++;
+            counts[trees[i].getOrder()]++;
         }
 
-        for (int i = 0; i <= max - 1; i++) {
-            histogram[i] += histogram[i + 1];
+        int total = 0;
+        for (int i = 0; i <= max; i++) {
+            int count = counts[i];
+            counts[i] = total;
+            total += count;
         }
 
         BinomialTreeDemo[] newArray = new BinomialTreeDemo[trees.length];
-
-        for (int i = trees.length - 1; i >= 0; i--) {
-            newArray[histogram[trees[i].getOrder()] - 1] = trees[i];
-            --histogram[trees[i].getOrder()];
+        for (int i = 0; i < trees.length; i++) {
+            newArray[counts[trees[i].getOrder()]] = trees[i];
+            counts[trees[i].getOrder()]++;
         }
 
         System.arraycopy(trees, 0, newArray, 0, trees.length);
