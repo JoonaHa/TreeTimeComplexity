@@ -244,7 +244,7 @@ public class Benchmark {
 
         for (int i = 0; i < size; i++) {
 
-            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE - 10));
+            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
         }
 
         if (this.sorting.equals(InputTypes.ASCENDING)) {
