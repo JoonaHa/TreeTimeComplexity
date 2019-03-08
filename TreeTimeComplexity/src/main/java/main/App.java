@@ -27,8 +27,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import utils.InputTypes;
+
 /**
- * TODO Javafx palceholder template
  *
  * @author JoonaHa
  */
@@ -45,6 +45,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        //Parameter menu
         //Checkboxex
         CheckBox addBox = new CheckBox("add");
         CheckBox peekBox = new CheckBox("peek");
@@ -170,18 +171,21 @@ public class App extends Application {
             int lenght = 0;
             int iterations = 0;
 
+            //Check that textboxes can be coverted to integer
             try {
                 lenght = Integer.parseInt(inputLenghtTextfield.getText().replaceAll("\\s+", ""));
 
                 iterations = Integer.parseInt(iterationsTextField.getText().replaceAll("\\s+", ""));
             } catch (NumberFormatException e) {
 
+                //update error label
                 errorLabel.setText("Lenght and iterations field can not be empty!");
                 errorLabel.setTextFill(Color.RED);
                 errorLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 11));
 
             }
 
+            //Check that atleast one cehcbox is selected
             boolean atLeasOneSelected = false;
             for (Operations s : selectedOperations) {
                 if (s != null) {
@@ -190,6 +194,7 @@ public class App extends Application {
                 }
             }
 
+            //update error label
             if (!atLeasOneSelected) {
                 errorLabel.setText("Select atleast one checkbox!");
                 errorLabel.setTextFill(Color.RED);
@@ -197,12 +202,13 @@ public class App extends Application {
 
             }
 
+            // run benchmark if everything is okay with given parameters
             if (!(lenght == 0 || iterations == 0 || !atLeasOneSelected)) {
                 errorLabel.setText("");
                 Scene barchart = new BenchmarkResultGUI(lenght, iterations, selectedOperations, sorting[0]).run();
 
                 Stage newstage = new Stage();
-
+                // open a new window with bechmark result visualisation
                 newstage.setScene(barchart);
                 newstage.show();
             }

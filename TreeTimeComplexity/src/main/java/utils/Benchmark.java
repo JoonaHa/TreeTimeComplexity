@@ -20,6 +20,7 @@ import algorithms.MinHeaps;
 import java.util.stream.LongStream;
 
 /**
+ * Class for testing Objects that inherit MinHeaps
  *
  * @author JoonaHa
  */
@@ -30,6 +31,18 @@ public class Benchmark {
     private int iterations;
     private InputTypes sorting;
 
+    /**
+     * *
+     *
+     *
+     * @param heap Object to benchmark
+     * @param iterations Number of iterations the benchmark will run. The
+     * average running time calculation is based on the number of iterations.
+     * @param inputLenght Lenght of randomised input data which will be used for
+     * testing.
+     * @param sorting Is the input data random or in ascending or descending
+     * order.
+     */
     public Benchmark(MinHeaps heap, int iterations, int inputLenght, InputTypes sorting) {
         this.heap = heap;
         this.iterations = iterations;
@@ -37,6 +50,13 @@ public class Benchmark {
         this.input = createTestData(inputLenght);
     }
 
+    // Public methods for benchmarking specific operations.
+    /**
+     * Benchmarks add operation. Results in long[3] array.
+     *
+     * @return returns bechmark times int a long[3] array. long[0] is min-value,
+     * long[1] max and long[2] is average.
+     */
     public long[] testAdd() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
@@ -53,6 +73,12 @@ public class Benchmark {
 
     }
 
+    /**
+     * Benchmarks peek operation. Results in long[3] array.
+     *
+     * @return returns bechmark times int a long[3] array. long[0] is min-value,
+     * long[1] max and long[2] is average.
+     */
     public long[] testPeek() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
@@ -69,6 +95,12 @@ public class Benchmark {
 
     }
 
+    /**
+     * Benchmarks pop operation. Results in long[3] array.
+     *
+     * @return returns bechmark times int a long[3] array. long[0] is min-value,
+     * long[1] max and long[2] is average.
+     */
     public long[] testPop() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
@@ -86,6 +118,12 @@ public class Benchmark {
 
     }
 
+    /**
+     * Benchmarks pop operation. Results in long[3] array.
+     *
+     * @return returns bechmark times int a long[3] array. long[0] is min-value,
+     * long[1] max and long[2] is average.
+     */
     public long[] testDecreaseKey() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
@@ -103,6 +141,12 @@ public class Benchmark {
 
     }
 
+    /**
+     * Benchmarks delete operation. Results in long[3] array.
+     *
+     * @return returns bechmark times int a long[3] array. long[0] is min-value,
+     * long[1] max and long[2] is average.
+     */
     public long[] testDelete() {
         long[] times = new long[iterations];
         for (int i = 0; i < iterations; i++) {
@@ -120,11 +164,9 @@ public class Benchmark {
 
     }
 
+    //methods for running one iteration of a test
     private long runAdd() {
         heap.clear();
-        for (int i = 0; i < input.length; i++) {
-            heap.add(input[i]);
-        }
 
         long start = System.nanoTime();
 
@@ -211,6 +253,7 @@ public class Benchmark {
 
     }
 
+    //find min value
     private long findMin(long[] array) {
         long min = array[0];
         for (int i = 0; i < array.length; i++) {
@@ -224,6 +267,7 @@ public class Benchmark {
         return min;
     }
 
+    //find max value
     private long findMax(long[] array) {
         long max = array[0];
         for (int i = 0; i < array.length; i++) {
@@ -237,7 +281,7 @@ public class Benchmark {
         return max;
     }
 
-    //Generate pseudorandom testdata from lasta digits of system.nanotime()
+    //Generate pseudorandom testdata from last digits of system.nanotime()
     private int[] createTestData(int size) {
 
         int[] values = new int[size];
@@ -247,6 +291,7 @@ public class Benchmark {
             values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
         }
 
+        //sort generated  data based on the instance varibale this.sorting
         if (this.sorting.equals(InputTypes.ASCENDING)) {
             values = IntQuickSort.quickSortAscend(values, 0, size - 1);
         }

@@ -7,7 +7,7 @@ import utils.GenericArrayList;
  *
  * @author JoonaHa
  */
-public class MinBinaryHeap extends MinHeaps {
+public class MinBinaryHeap implements MinHeaps {
 
     private GenericArrayList<Integer> heap;
 

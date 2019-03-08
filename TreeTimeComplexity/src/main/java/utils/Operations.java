@@ -17,6 +17,7 @@
 package utils;
 
 /**
+ * Enum for supported heap operations.
  *
  * @author JoonaHa
  */

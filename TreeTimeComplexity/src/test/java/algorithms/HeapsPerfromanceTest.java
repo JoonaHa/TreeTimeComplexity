@@ -22,10 +22,7 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.stream.LongStream;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
-import utils.InputTypes;
-import utils.IntCountingSort;
 
 /**
  *
@@ -168,6 +165,36 @@ public class HeapsPerfromanceTest {
         results[3] = LongStream.of(compTimes).sum() / iterations;
 
         System.out.println("\n--------TEST DELETE--------");
+        System.out.println("BinaryHeap/PriorityQue: " + results[0] + "/" + results[3]);
+        System.out.println("BinomialHeap/PriorityQue: " + results[1] + "/" + results[3]);
+        System.out.println("FibonacciHeap/PriorityQue: " + results[2] + "/" + results[3]);
+
+    }
+
+    @Test
+    public void testDecreaseKey() {
+        long[] results = new long[4];
+
+        for (int i = 0; i < testHeaps.size(); i++) {
+            long[] times = new long[iterations];
+
+            for (int j = 0; j < iterations; j++) {
+                times[j] = runDecreaseKey(testHeaps.get(i));
+
+            }
+            results[i] = LongStream.of(times).sum() / iterations;
+
+        }
+
+        long[] compTimes = new long[iterations];
+        for (int i = 0; i < iterations; i++) {
+            compTimes[i] = runCompDecreaseKey();
+
+        }
+
+        results[3] = LongStream.of(compTimes).sum() / iterations;
+
+        System.out.println("\n--------TEST DECREASE KEY--------");
         System.out.println("BinaryHeap/PriorityQue: " + results[0] + "/" + results[3]);
         System.out.println("BinomialHeap/PriorityQue: " + results[1] + "/" + results[3]);
         System.out.println("FibonacciHeap/PriorityQue: " + results[2] + "/" + results[3]);

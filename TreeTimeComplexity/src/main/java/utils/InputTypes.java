@@ -17,6 +17,7 @@
 package utils;
 
 /**
+ * Enum for testdata soritn types.
  *
  * @author JoonaHa
  */

@@ -19,19 +19,28 @@ package algorithms;
 import utils.GenericArrayList;
 
 /**
+ * Minimium Binomial implementation
  *
  * @author JoonaHa
  */
-public class MinBinomialHeap extends MinHeaps {
+public class MinBinomialHeap implements MinHeaps {
 
-    private GenericArrayList<BinomialTreeDemo> roots;
+    private GenericArrayList<BinomialTree> roots;
     private int size;
 
+    /**
+     * Create empty heap
+     */
     public MinBinomialHeap() {
         this.roots = new GenericArrayList<>();
         this.size = 0;
     }
 
+    /**
+     * Create heap based on input data
+     *
+     * @param list data that will be made in to heap.
+     */
     public MinBinomialHeap(GenericArrayList<Integer> list) {
         this.roots = new GenericArrayList<>();
         this.size = 0;
@@ -43,36 +52,54 @@ public class MinBinomialHeap extends MinHeaps {
 
     }
 
+    /**
+     * Add integer value
+     *
+     * @param value value to add to binomial heap
+     */
     @Override
     public void add(int value) {
+        //Make new heap and merge it. Increase size
         MinBinomialHeap insert = new MinBinomialHeap();
-        insert.insertNewNode(new BinomialTreeDemo(value));
+        insert.insertNewNode(new BinomialTree(value));
         this.union(insert);
         this.size++;
     }
 
+    /**
+     * Returns the minimium value of the heap
+     *
+     * @return minmiun value of the heap
+     */
     @Override
     public int peek() {
 
         return roots.get(findMinIndex()).getKey();
     }
 
+    /**
+     * Returns the minimium value of the heap and removes it
+     *
+     * @return minimiun value of the heap
+     */
     @Override
     public int pop() {
+        //find minimuin value from root list
         int minIndex = findMinIndex();
-        BinomialTreeDemo min = roots.get(minIndex);
+        BinomialTree min = roots.get(minIndex);
         roots.remove(minIndex);
 
+        //Add childs to new  heap
         if (min.hasChild()) {
 
-            BinomialTreeDemo child = min.getChild();
+            BinomialTree child = min.getChild();
 
             MinBinomialHeap heap = new MinBinomialHeap();
 
             if (child.hasSibling()) {
 
-                BinomialTreeDemo sibling = child.getSibling();
-                BinomialTreeDemo old;
+                BinomialTree sibling = child.getSibling();
+                BinomialTree old;
                 child.setSibling(null);
 
                 while (sibling != null) {
@@ -86,6 +113,8 @@ public class MinBinomialHeap extends MinHeaps {
             }
 
             heap.insertNewNode(child);
+
+            //merge the new heap with childs
             this.union(heap);
         }
 
@@ -94,7 +123,11 @@ public class MinBinomialHeap extends MinHeaps {
 
     }
 
-    public GenericArrayList<BinomialTreeDemo> getTrees() {
+    /**
+     *
+     * @return Return root list with it's Binomial trees
+     */
+    private GenericArrayList<BinomialTree> getTrees() {
         return this.roots;
     }
 
@@ -103,10 +136,17 @@ public class MinBinomialHeap extends MinHeaps {
         return size;
     }
 
+    /**
+     * Decreases given key with one
+     *
+     * @param value to search in a tree
+     * @return old value
+     */
     @Override
     public int decreaseKey(int value) {
 
-        BinomialTreeDemo decreaseThis = findNode(value);
+        //Find node and and siftup to keep the heap property
+        BinomialTree decreaseThis = findNode(value);
 
         int oldaValue = decreaseThis.getKey();
         decreaseThis.decreaseKey();
@@ -116,10 +156,18 @@ public class MinBinomialHeap extends MinHeaps {
         return oldaValue;
     }
 
+    /**
+     * Delete node with given value
+     *
+     * @param value to be deleted
+     * @return old value
+     */
     @Override
     public int delete(int value) {
 
-        BinomialTreeDemo oldNode = findNode(value);
+        //find node, replace it's value by MIN_VALUE
+        //siftup and reomve it with pop
+        BinomialTree oldNode = findNode(value);
 
         int oldValue = oldNode.getKey();
 
@@ -132,6 +180,9 @@ public class MinBinomialHeap extends MinHeaps {
         return oldValue;
     }
 
+    /**
+     * clear heap
+     */
     @Override
     public void clear() {
         this.roots = new GenericArrayList<>();
@@ -139,45 +190,56 @@ public class MinBinomialHeap extends MinHeaps {
 
     }
 
+    /**
+     * Merge two heaps.
+     *
+     * @param otherHeap to merge with
+     */
     private void union(MinBinomialHeap otherHeap) {
-        GenericArrayList<BinomialTreeDemo> others = otherHeap.getTrees();
+        GenericArrayList<BinomialTree> others = otherHeap.getTrees();
 
+        // Add otherheaps root trees and to this heaps root.
         for (int i = 0; i < others.size(); i++) {
             this.roots.add(others.get(i));
 
         }
 
-        BinomialTreeDemo[] temp = new BinomialTreeDemo[roots.size()];
+        //Sort roots by order and reset roots
+        BinomialTree[] temp = new BinomialTree[roots.size()];
 
         for (int i = 0; i < roots.size(); i++) {
             temp[i] = this.roots.get(i);
 
         }
-
         sortbyOrder(temp);
+
         this.roots = new GenericArrayList<>();
 
         for (int i = 0; i < temp.length; i++) {
             this.roots.add(temp[i]);
         }
 
+        //Link to binomial trees if they are the same order
         int index = 0;
         int nextIndex = 1;
 
         while (nextIndex < roots.size()) {
-            BinomialTreeDemo x = this.roots.get(index);
-            BinomialTreeDemo nextX = this.roots.get(nextIndex);
+            BinomialTree x = this.roots.get(index);
+            BinomialTree nextX = this.roots.get(nextIndex);
 
             if (x.getOrder() != nextX.getOrder()) {
                 index++;
                 nextIndex++;
 
+                //Link if nextIndex index are the same order
+                //if index and nextIndex +1 is same size move ahead.
             } else if (nextIndex + 1 < roots.size()
                     && this.roots.get(nextIndex + 1).getOrder() == x.getOrder()) {
 
                 index++;
                 nextIndex++;
             } else {
+                //link trees and remove the child node form root list
                 this.roots.set(index, x.link(nextX));
                 this.roots.remove(nextIndex);
             }
@@ -185,6 +247,11 @@ public class MinBinomialHeap extends MinHeaps {
         }
     }
 
+    /**
+     * Find min index from roots list. O(log n)
+     *
+     * @return
+     */
     private int findMinIndex() {
         int min = roots.get(0).getKey();
         int index = 0;
@@ -199,7 +266,13 @@ public class MinBinomialHeap extends MinHeaps {
         return index;
     }
 
-    public BinomialTreeDemo findNode(int value) {
+    /**
+     * Finde node with give value
+     *
+     * @param value
+     * @return Node with given value
+     */
+    public BinomialTree findNode(int value) {
 
         //Check roots first
         for (int i = 0; i < roots.size(); i++) {
@@ -210,7 +283,7 @@ public class MinBinomialHeap extends MinHeaps {
         }
 
         //recurse if needed
-        BinomialTreeDemo ret = null;
+        BinomialTree ret = null;
         for (int i = 0; i < roots.size(); i++) {
 
             if (roots.get(i).getKey() < value) {
@@ -227,7 +300,14 @@ public class MinBinomialHeap extends MinHeaps {
         return ret;
     }
 
-    private BinomialTreeDemo recurseTree(int value, BinomialTreeDemo tree) {
+    /**
+     * Tail recursive function for recursing the BinomialTree
+     *
+     * @param value key to be saerched for
+     * @param tree tree to recurse trough
+     * @return node
+     */
+    private BinomialTree recurseTree(int value, BinomialTree tree) {
 
         if (tree == null) {
             return null;
@@ -237,7 +317,7 @@ public class MinBinomialHeap extends MinHeaps {
             return tree;
         }
 
-        BinomialTreeDemo child = recurseTree(value, tree.getChild());
+        BinomialTree child = recurseTree(value, tree.getChild());
         if (child != null) {
             return child;
         }
@@ -245,14 +325,24 @@ public class MinBinomialHeap extends MinHeaps {
         return recurseTree(value, tree.getSibling());
     }
 
-    private void insertNewNode(BinomialTreeDemo newNode) {
+    /**
+     * Add new node to root list
+     *
+     * @param newNode to be added
+     */
+    private void insertNewNode(BinomialTree newNode) {
         this.roots.add(newNode);
     }
 
-    private void siftUp(BinomialTreeDemo node) {
+    /**
+     * Siftup to maintain the heap value
+     *
+     * @param node Node to siftup from
+     */
+    private void siftUp(BinomialTree node) {
 
         int value = node.getKey();
-        BinomialTreeDemo parent = node.getParent();
+        BinomialTree parent = node.getParent();
 
         //swap node with its parent till its parent is smaller 
         //or the node is root
@@ -267,7 +357,13 @@ public class MinBinomialHeap extends MinHeaps {
 
     }
 
-    private void swap(BinomialTreeDemo a, BinomialTreeDemo b) {
+    /**
+     * Swap keys of two nodes
+     *
+     * @param a Node 1
+     * @param b Node 2
+     */
+    private void swap(BinomialTree a, BinomialTree b) {
 
         int temporary = a.getKey();
 
@@ -276,7 +372,12 @@ public class MinBinomialHeap extends MinHeaps {
 
     }
 
-    private void sortbyOrder(BinomialTreeDemo[] trees) {
+    /**
+     * Countig sort by binomialheap order
+     *
+     * @param trees Array of trees to sort,
+     */
+    private void sortbyOrder(BinomialTree[] trees) {
 
         int max = trees[0].getOrder();
         for (int i = 1; i < trees.length; i++) {
@@ -297,7 +398,7 @@ public class MinBinomialHeap extends MinHeaps {
             total += count;
         }
 
-        BinomialTreeDemo[] newArray = new BinomialTreeDemo[trees.length];
+        BinomialTree[] newArray = new BinomialTree[trees.length];
         for (int i = 0; i < trees.length; i++) {
             newArray[counts[trees[i].getOrder()]] = trees[i];
             counts[trees[i].getOrder()]++;
@@ -306,25 +407,40 @@ public class MinBinomialHeap extends MinHeaps {
         System.arraycopy(trees, 0, newArray, 0, trees.length);
     }
 
-    public static class BinomialTreeDemo {
+    /**
+     * Binomial tree.
+     */
+    public static class BinomialTree {
 
         private int key;
         private int order;
-        private BinomialTreeDemo parent;
-        private BinomialTreeDemo child;
-        private BinomialTreeDemo sibling;
+        private BinomialTree parent;
+        private BinomialTree child;
+        private BinomialTree sibling;
 
-        public BinomialTreeDemo(int value) {
+        /**
+         * Create Binomial tree with give starting value
+         *
+         * @param value
+         */
+        public BinomialTree(int value) {
             this.key = value;
             this.order = 0;
         }
 
-        public BinomialTreeDemo link(BinomialTreeDemo treeToBeLinked) {
+        /**
+         * Links too Binmialtreess Return the parent node after comparison
+         *
+         * @param treeToBeLinked
+         * @return The parent node of the linked tree
+         */
+        public BinomialTree link(BinomialTree treeToBeLinked) {
 
             if (this.getOrder() != treeToBeLinked.getOrder()) {
                 return null;
             }
 
+            //Make treeToBeLinked parent
             if (this.getKey() > treeToBeLinked.getKey()) {
                 this.setParent(treeToBeLinked);
                 this.setSibling(treeToBeLinked.getChild());
@@ -332,6 +448,8 @@ public class MinBinomialHeap extends MinHeaps {
                 treeToBeLinked.increaseDegree();
                 return treeToBeLinked;
             } else {
+
+                //Make this parent
                 treeToBeLinked.setParent(this);
                 treeToBeLinked.setSibling(this.getChild());
                 this.setChild(treeToBeLinked);
@@ -342,23 +460,23 @@ public class MinBinomialHeap extends MinHeaps {
 
         }
 
-        public BinomialTreeDemo getChild() {
+        public BinomialTree getChild() {
             return child;
         }
 
-        public void setChild(BinomialTreeDemo child) {
+        public void setChild(BinomialTree child) {
             this.child = child;
         }
 
-        public void setSibling(BinomialTreeDemo sibling) {
+        public void setSibling(BinomialTree sibling) {
             this.sibling = sibling;
         }
 
-        public BinomialTreeDemo getSibling() {
+        public BinomialTree getSibling() {
             return sibling;
         }
 
-        public BinomialTreeDemo getParent() {
+        public BinomialTree getParent() {
             return parent;
         }
 
@@ -366,7 +484,7 @@ public class MinBinomialHeap extends MinHeaps {
             return key;
         }
 
-        public void setParent(BinomialTreeDemo parent) {
+        public void setParent(BinomialTree parent) {
             this.parent = parent;
         }
 

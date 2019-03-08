@@ -18,13 +18,12 @@ package algorithms;
 
 /**
  *
- * Abstract class that implemets the basic operations of a heap. Creates a
- * dynamic heap.
+ * Interface for the basic operations of a heap. Creates a dynamic heap.
  *
  *
  * @author JoonaHa
  */
-public abstract class MinHeaps {
+public interface MinHeaps {
 
     public abstract int peek();
 
@@ -33,7 +32,7 @@ public abstract class MinHeaps {
      *
      * @param insert Value to add to the heap.
      */
-    public abstract void add(int insert);
+    public void add(int insert);
 
     /**
      * Abstract method to delete a value from a given index. Implementation
@@ -42,25 +41,25 @@ public abstract class MinHeaps {
      * @return removed node's value
      * @param value value to delete a value from
      */
-    public abstract int delete(int value);
+    public int delete(int value);
 
     /**
      * Abstract method that returns and delets the root node.
      *
      * @return root node's key value
      */
-    public abstract int pop();
+    public int pop();
 
     /**
      * Decrease key by 1 form a given index. Return the old value of the key
      *
-     * @param index where which value will be incremented
+     * @param value where which value will be incremented
      * @return value of the old key
      */
-    public abstract int decreaseKey(int value);
+    public int decreaseKey(int value);
 
-    public abstract void clear();
+    public void clear();
 
-    public abstract int getSize();
+    public int getSize();
 
 }

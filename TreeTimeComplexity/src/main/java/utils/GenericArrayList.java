@@ -19,20 +19,29 @@ package utils;
 import java.util.ArrayList;
 
 /**
+ * Implementation of arraylist with a generix type
  *
  * @author JoonaHa
  */
 public class GenericArrayList<T> {
 
     private int size;
-    private final static int DEAFAULT_SIZE = 50;
+    private final static int DEFAULT_SIZE = 50;
     private T[] entries;
 
+    /**
+     * Create empty arraylist
+     */
     public GenericArrayList() {
-        this.entries = (T[]) new Object[DEAFAULT_SIZE];
+        this.entries = (T[]) new Object[DEFAULT_SIZE];
         this.size = 0;
     }
 
+    /**
+     * Create arraylist from java's arraylist. For testing
+     *
+     * @param arraylist
+     */
     public GenericArrayList(ArrayList<T> arraylist) {
         this.entries = (T[]) new Object[arraylist.size() * 3 / 2 + 1];
         this.size = 0;

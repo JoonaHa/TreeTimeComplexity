@@ -19,18 +19,28 @@ package algorithms;
 import utils.GenericArrayList;
 
 /**
+ * FibonacciHeap implementation based on
+ * https://github.com/nlfiedler/graphmaker/blob/master/core/src/com/bluemarsh/graphmaker/core/util/FibonacciHeap.java
  *
  * @author JoonaHa
  */
-public class MinFibonaciHeap extends MinHeaps {
+public class MinFibonaciHeap implements MinHeaps {
 
-    private FibonacciTreeDemo mini;
+    private FibonacciTree mini;
     private int size;
 
+    /**
+     * Create empty fibonacci heap
+     */
     public MinFibonaciHeap() {
         this.size = 0;
     }
 
+    /**
+     * Create heap based on input data
+     *
+     * @param list data that will be made in to heap.
+     */
     public MinFibonaciHeap(GenericArrayList<Integer> values) {
         this.size = 0;
 
@@ -40,11 +50,17 @@ public class MinFibonaciHeap extends MinHeaps {
         }
     }
 
+    /**
+     * Add given value to fibonacci heap
+     *
+     * @param value
+     */
     @Override
     public void add(int value) {
 
-        FibonacciTreeDemo newTree = new FibonacciTreeDemo(value);
+        FibonacciTree newTree = new FibonacciTree(value);
 
+        //add new value to left of minimium value add linked other nodes to left of new node
         if (mini != null) {
             newTree.setRight(mini);
             newTree.setLeft(mini.getLeft());
@@ -55,6 +71,7 @@ public class MinFibonaciHeap extends MinHeaps {
             if (value < mini.getKey()) {
                 mini = newTree;
             }
+            // if heap is empty update mini to new value
 
         } else {
 
@@ -66,27 +83,36 @@ public class MinFibonaciHeap extends MinHeaps {
 
     }
 
+    /**
+     *
+     * @return the smallest key of the heap
+     */
     @Override
     public int peek() {
         return mini.getKey();
     }
 
+    /**
+     * Remove the heaps minimium value Also "optimises" the fiboncacci tree
+     *
+     * @return minimium value
+     */
     @Override
     public int pop() {
-        FibonacciTreeDemo smallest = mini;
+        FibonacciTree smallest = mini;
 
         if (smallest.getChild() != null) {
 
             smallest.getChild().setParent(null);
 
-            for (FibonacciTreeDemo node = smallest.getChild().getRight();
+            for (FibonacciTree node = smallest.getChild().getRight();
                     node != smallest.getChild(); node = node.getRight()) {
                 node.setParent(null);
             }
 
             //raise child nodes to root list
-            FibonacciTreeDemo minLeft = mini.getLeft();
-            FibonacciTreeDemo smallChildLeft = smallest.getChild().getLeft();
+            FibonacciTree minLeft = mini.getLeft();
+            FibonacciTree smallChildLeft = smallest.getChild().getLeft();
             mini.setLeft(smallChildLeft);
 
             smallChildLeft.setRight(mini);
@@ -105,6 +131,7 @@ public class MinFibonaciHeap extends MinHeaps {
         } else {
             mini = smallest.getRight();
 
+            //Optimses the fibonacci tree 
             consolidate();
         }
 
@@ -126,9 +153,17 @@ public class MinFibonaciHeap extends MinHeaps {
 
     }
 
+    /**
+     * Decrease the node with given value by one
+     *
+     * @param value to decrease
+     * @return oldvalue
+     */
     @Override
     public int decreaseKey(int value) {
-        FibonacciTreeDemo node = findNode(value);
+
+        //Get node decrease it and siftup to maintain heap property
+        FibonacciTree node = findNode(value);
 
         if (node == null) {
             throw new NoSuchFieldError("No shuch value");
@@ -139,9 +174,17 @@ public class MinFibonaciHeap extends MinHeaps {
         return value;
     }
 
+    /**
+     * Delete node wih given value
+     *
+     * @param value Value to delete from heap.
+     * @return old value
+     */
     @Override
     public int delete(int value) {
-        FibonacciTreeDemo node = findNode(value);
+
+        //set nodes key to MIN_VALUE sift it up to mini and pop it. 
+        FibonacciTree node = findNode(value);
 
         node.setKey(Integer.MIN_VALUE);
 
@@ -153,9 +196,15 @@ public class MinFibonaciHeap extends MinHeaps {
 
     }
 
-    public FibonacciTreeDemo findNode(int value) {
-        FibonacciTreeDemo start = mini;
-        FibonacciTreeDemo iterate = start.getRight();
+    /**
+     * Find value form heap O(n)
+     *
+     * @param value
+     * @return
+     */
+    public FibonacciTree findNode(int value) {
+        FibonacciTree start = mini;
+        FibonacciTree iterate = start.getRight();
 
         if (mini.getKey() == value) {
             return mini;
@@ -172,29 +221,32 @@ public class MinFibonaciHeap extends MinHeaps {
         return null;
     }
 
+    /**
+     * Links Fibonacci trees of same order O(log N)
+     */
     private void consolidate() {
 
-        FibonacciTreeDemo start = mini;
-        FibonacciTreeDemo iterate = mini;
+        FibonacciTree start = mini;
+        FibonacciTree iterate = mini;
 
         //log2(max_size) the most root notes that can possibly be.
-        FibonacciTreeDemo[] nodes = new FibonacciTreeDemo[45];
+        FibonacciTree[] nodes = new FibonacciTree[45];
 
         do {
 
-            FibonacciTreeDemo x = iterate;
+            FibonacciTree x = iterate;
 
-            FibonacciTreeDemo nextIterate = iterate.getRight();
+            FibonacciTree nextIterate = iterate.getRight();
 
             int degree = x.getOrder();
 
             //if two trees with same degree link them.
             while (nodes[degree] != null) {
 
-                FibonacciTreeDemo temp = nodes[degree];
+                FibonacciTree temp = nodes[degree];
 
                 if (x.getKey() > temp.getKey()) {
-                    FibonacciTreeDemo t = temp;
+                    FibonacciTree t = temp;
                     temp = x;
                     x = t;
                 }
@@ -219,7 +271,7 @@ public class MinFibonaciHeap extends MinHeaps {
 
         mini = start;
 
-        for (FibonacciTreeDemo n : nodes) {
+        for (FibonacciTree n : nodes) {
             if (n != null) {
             }
             if (n != null && n.getKey() < mini.getKey()) {
@@ -230,7 +282,14 @@ public class MinFibonaciHeap extends MinHeaps {
 
     }
 
-    private void siftUp(FibonacciTreeDemo current, FibonacciTreeDemo parent) {
+    /**
+     * Siftup from current node by cutting it or it's parent and adding them to
+     * the root nodes.
+     *
+     * @param current Node to siftup from
+     * @param parent Current nodes parent
+     */
+    private void siftUp(FibonacciTree current, FibonacciTree parent) {
         if (parent != null && current.getKey() < parent.getKey()) {
             parent.cut(current, mini);
             parent.cascadingCut(mini);
@@ -242,24 +301,38 @@ public class MinFibonaciHeap extends MinHeaps {
 
     }
 
-    private static class FibonacciTreeDemo {
+    /**
+     * FiboncacciTree to used as a node for the heap
+     */
+    private static class FibonacciTree {
 
         private int key;
         private int order;
-        private FibonacciTreeDemo parent;
-        private FibonacciTreeDemo child;
-        private FibonacciTreeDemo right;
-        private FibonacciTreeDemo left;
+        private FibonacciTree parent;
+        private FibonacciTree child;
+        private FibonacciTree right;
+        private FibonacciTree left;
         private boolean marked;
 
-        public FibonacciTreeDemo(int value) {
+        /**
+         * Create Tree with on starting value
+         *
+         * @param value
+         */
+        public FibonacciTree(int value) {
             this.key = value;
             this.order = 0;
             this.right = this;
             this.left = this;
         }
 
-        public FibonacciTreeDemo link(FibonacciTreeDemo child) {
+        /**
+         * Link this node with a given child node
+         *
+         * @param child Node to link to this
+         * @return Parent node
+         */
+        public FibonacciTree link(FibonacciTree child) {
 
             if (this.getOrder() != child.getOrder()) {
                 return null;
@@ -273,6 +346,7 @@ public class MinFibonaciHeap extends MinHeaps {
 
             if (this.getChild() != null) {
 
+                //update child sibling  with this childs
                 child.setLeft(this.getChild());
                 child.setRight(this.getChild().getRight());
                 this.getChild().setRight(child);
@@ -290,11 +364,17 @@ public class MinFibonaciHeap extends MinHeaps {
 
         }
 
-        public void cascadingCut(FibonacciTreeDemo mini) {
-            FibonacciTreeDemo parent = this.parent;
+        /**
+         * Recursively cut marked nodes
+         *
+         * @param mini Fibonacci Trees minimiun value
+         */
+        public void cascadingCut(FibonacciTree mini) {
+            FibonacciTree parent = this.parent;
 
             if (parent != null) {
 
+                // if node is a child of another node recursively cut 
                 if (this.isMarked()) {
 
                     parent.cut(this, mini);
@@ -307,52 +387,58 @@ public class MinFibonaciHeap extends MinHeaps {
             }
         }
 
-        public void cut(FibonacciTreeDemo start, FibonacciTreeDemo mini) {
-            start.getLeft().setRight(start.getRight());
-            start.getRight().setLeft(start.getLeft());
+        /**
+         * Cut given node from linked list
+         *
+         * @param node
+         * @param mini
+         */
+        private void cut(FibonacciTree node, FibonacciTree mini) {
+            node.getLeft().setRight(node.getRight());
+            node.getRight().setLeft(node.getLeft());
             this.decreaseDegree();
 
             if (this.order == 0) {
                 this.child = null;
-            } else if (this.child == start) {
-                this.child = start.getRight();
+            } else if (this.child == node) {
+                this.child = node.getRight();
             }
 
-            start.setRight(mini);
-            start.setLeft(mini.getLeft());
-            mini.setLeft(start);
-            start.getLeft().setRight(start);
+            node.setRight(mini);
+            node.setLeft(mini.getLeft());
+            mini.setLeft(node);
+            node.getLeft().setRight(node);
 
-            start.setParent(null);
+            node.setParent(null);
 
-            start.marked = false;
+            node.marked = false;
         }
 
-        public FibonacciTreeDemo getChild() {
+        public FibonacciTree getChild() {
             return child;
         }
 
-        public void setChild(FibonacciTreeDemo child) {
+        public void setChild(FibonacciTree child) {
             this.child = child;
         }
 
-        public void setRight(FibonacciTreeDemo sibling) {
+        public void setRight(FibonacciTree sibling) {
             this.right = sibling;
         }
 
-        public FibonacciTreeDemo getRight() {
+        public FibonacciTree getRight() {
             return right;
         }
 
-        public void setLeft(FibonacciTreeDemo leftSibling) {
+        public void setLeft(FibonacciTree leftSibling) {
             this.left = leftSibling;
         }
 
-        public FibonacciTreeDemo getLeft() {
+        public FibonacciTree getLeft() {
             return left;
         }
 
-        public FibonacciTreeDemo getParent() {
+        public FibonacciTree getParent() {
             return parent;
         }
 
@@ -360,7 +446,7 @@ public class MinFibonaciHeap extends MinHeaps {
             return key;
         }
 
-        public void setParent(FibonacciTreeDemo parent) {
+        public void setParent(FibonacciTree parent) {
             this.parent = parent;
         }
 

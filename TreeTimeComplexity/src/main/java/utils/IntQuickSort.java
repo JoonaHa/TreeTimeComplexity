@@ -17,14 +17,23 @@
 package utils;
 
 /**
+ * Quicksort implementations for intgers
  *
  * @author JoonaHa
  */
 public class IntQuickSort {
 
+    /**
+     * Recursively quicsort in descending order
+     *
+     * @param input Array to sort
+     * @param start
+     * @param end
+     * @return
+     */
     public static int[] quickSortDescen(int[] input, int start, int end) {
 
-        int partitionPoint = partition(input, start, end);
+        int partitionPoint = partitionDesc(input, start, end);
 
         if (partitionPoint - 1 > start) {
             return quickSortDescen(input, start, partitionPoint - 1);
@@ -36,7 +45,16 @@ public class IntQuickSort {
         return input;
     }
 
-    private static int partition(int[] array, int start, int end) {
+    /**
+     * Own partion method for descending order
+     *
+     * @param array
+     * @param start
+     * @param end
+     * @return
+     */
+    private static int partitionDesc(int[] array, int start, int end) {
+        //Chosen pivot is just the right side of partition
         int pivotPoint = array[end];
 
         for (int i = start; i < end; i++) {
@@ -58,9 +76,17 @@ public class IntQuickSort {
 
     }
 
+    /**
+     * Recursively quicsort in ascending order
+     *
+     * @param input Array to sort
+     * @param start
+     * @param end
+     * @return
+     */
     public static int[] quickSortAscend(int[] input, int start, int end) {
 
-        int partitionPoint = partition2(input, start, end);
+        int partitionPoint = partitionAsc(input, start, end);
 
         if (partitionPoint - 1 > start) {
             return quickSortAscend(input, start, partitionPoint - 1);
@@ -72,7 +98,15 @@ public class IntQuickSort {
         return input;
     }
 
-    private static int partition2(int[] array, int start, int end) {
+    /**
+     * Own partion method for ascending order
+     *
+     * @param array
+     * @param start
+     * @param end
+     * @return
+     */
+    private static int partitionAsc(int[] array, int start, int end) {
         int pivotPoint = array[end];
 
         for (int i = start; i < end; i++) {

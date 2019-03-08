@@ -45,6 +45,14 @@ public class BenchmarkResultGUI {
     private Operations[] operations;
     private InputTypes sorting;
 
+    /**
+     * Class for creating barchart window
+     *
+     * @param inputLenght lenght of bechmark data
+     * @param iterations bechmark iterations
+     * @param operations operatins to benchmark
+     * @param sorting benchmark data sorting
+     */
     public BenchmarkResultGUI(int inputLenght, int iterations, Operations[] operations, InputTypes sorting) {
         this.inputLenght = inputLenght;
         this.iterations = iterations;
@@ -53,6 +61,11 @@ public class BenchmarkResultGUI {
 
     }
 
+    /**
+     * Runs the benchmarks Creates Window with results. Returns javagx scene
+     *
+     * @return Scene with benchmark charts
+     */
     public Scene run() {
         StackPane charts = new StackPane();
         CategoryAxis xAxis
