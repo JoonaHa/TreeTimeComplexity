@@ -244,14 +244,14 @@ public class Benchmark {
 
         for (int i = 0; i < size; i++) {
 
-            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE - 10));
+            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
         }
 
         if (this.sorting.equals(InputTypes.ASCENDING)) {
-            values = IntCountingSort.quickSortAscend(values, 0, size - 1);
+            values = IntQuickSort.quickSortAscend(values, 0, size - 1);
         }
         if (this.sorting.equals(InputTypes.DESCENDING)) {
-            values = IntCountingSort.quickSortDescen(values, 0, size - 1);
+            values = IntQuickSort.quickSortDescen(values, 0, size - 1);
 
         }
 
