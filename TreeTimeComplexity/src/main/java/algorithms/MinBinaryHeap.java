@@ -1,7 +1,5 @@
 package algorithms;
 
-import utils.GenericArrayList;
-
 /**
  * Min Binary Heap which extends abstract class MinHeaps
  *

@@ -16,8 +16,6 @@
  */
 package algorithms;
 
-import utils.GenericArrayList;
-
 /**
  * FibonacciHeap implementation based on
  * https://github.com/nlfiedler/graphmaker/blob/master/core/src/com/bluemarsh/graphmaker/core/util/FibonacciHeap.java

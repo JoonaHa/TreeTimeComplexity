@@ -16,6 +16,7 @@
  */
 package utils;
 
+import algorithms.IntQuickSort;
 import algorithms.MinHeaps;
 import java.util.stream.LongStream;
 

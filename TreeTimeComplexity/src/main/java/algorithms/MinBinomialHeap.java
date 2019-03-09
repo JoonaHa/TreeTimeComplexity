@@ -16,8 +16,6 @@
  */
 package algorithms;
 
-import utils.GenericArrayList;
-
 /**
  * Minimium Binomial implementation
  *

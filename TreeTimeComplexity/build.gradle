@@ -1,7 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
-apply plugin: 'checkstyle'
 jacocoTestReport {
     reports {
         xml.enabled = true
@@ -48,6 +47,7 @@ mainClassName = "main.App"
 test {
     beforeTest { descriptor ->
         logger.lifecycle("Running test: ${descriptor}")
+    testLogging.showStandardStreams = true
     }
 }
 

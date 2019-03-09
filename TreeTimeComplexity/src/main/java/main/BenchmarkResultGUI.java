@@ -84,74 +84,78 @@ public class BenchmarkResultGUI {
         series3.setName("Fibonacci Heap");
         ObservableList<Label> list = FXCollections.<Label>observableArrayList();
 
+        Benchmark benBinary = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting);
+        Benchmark benBinomial = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting);
+        Benchmark benFibonacci = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting);
+
         for (Operations operation : operations) {
 
             if (operation == Operations.ADD) {
                 xAxis.getCategories().add("add");
 
-                long[] bs1 = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting).testAdd();
+                long[] bs1 = benBinary.testAdd();
                 list.add(new Label("Binary add min/max: " + bs1[0] + " / " + bs1[1]));
                 series1.getData().add(new XYChart.Data<>("add", bs1[2] / this.inputLenght));
 
-                long[] bs2 = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting).testAdd();
+                long[] bs2 = benBinomial.testAdd();
                 list.add(new Label("Binomial add min/max: " + bs2[0] + " / " + bs2[1]));
                 series2.getData().add(new XYChart.Data<>("add", bs2[2] / this.inputLenght));
 
-                long[] bs3 = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting).testAdd();
+                long[] bs3 = benFibonacci.testAdd();
                 list.add(new Label("Fibonacci add min/max: " + bs3[0] + " / " + bs3[1]));
                 series3.getData().add(new XYChart.Data<>("add", bs3[2] / this.inputLenght));
             }
             if (operation == Operations.PEEK) {
 
-                long[] bs1 = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting).testPeek();
+                long[] bs1 = benBinary.testPeek();
                 list.add(new Label("Binary peek min/max: " + bs1[0] + " / " + bs1[1]));
                 series1.getData().add(new XYChart.Data<>("peek", bs1[2] / this.inputLenght));
 
-                long[] bs2 = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting).testPeek();
+                long[] bs2 = benBinomial.testPeek();
                 list.add(new Label("Binomial peek min/max: " + bs2[0] + " / " + bs2[1]));
                 series2.getData().add(new XYChart.Data<>("peek", bs2[2] / this.inputLenght));
 
-                long[] bs3 = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting).testPeek();
+                long[] bs3 = benFibonacci.testPeek();
                 list.add(new Label("Fibonacci peek min/max: " + bs3[0] + " / " + bs3[1]));
                 series3.getData().add(new XYChart.Data<>("peek", bs3[2] / this.inputLenght));
             }
             if (operation == Operations.POP) {
 
-                long[] bs1 = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting).testPop();
+                long[] bs1 = benBinary.testPop();
                 list.add(new Label("Binary pop min/max: " + bs1[0] + " / " + bs1[1]));
                 series1.getData().add(new XYChart.Data<>("pop", bs1[2] / this.inputLenght));
 
-                long[] bs2 = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting).testPop();
+                long[] bs2 = benBinomial.testPop();
                 list.add(new Label("Binomial pop min/max: " + bs2[0] + " / " + bs2[1]));
                 series2.getData().add(new XYChart.Data<>("pop", bs2[2] / this.inputLenght));
 
-                long[] bs3 = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting).testPop();
+                long[] bs3 = benFibonacci.testPop();
                 list.add(new Label("Fibonacci pop min/max: " + bs3[0] + " / " + bs3[1]));
                 series3.getData().add(new XYChart.Data<>("pop", bs3[2] / this.inputLenght));
             }
             if (operation == Operations.DELETE) {
-                long[] bs1 = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting).testDelete();
+                long[] bs1 = benBinary.testDelete();
                 list.add(new Label("Binary delete min/max: " + bs1[0] + " / " + bs1[1]));
                 series1.getData().add(new XYChart.Data<>("delete", bs1[2] / this.inputLenght));
 
-                long[] bs2 = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting).testDelete();
+                long[] bs2 = benBinomial.testDelete();
                 list.add(new Label("Binomial delete min/max: " + bs2[0] + " / " + bs2[1]));
                 series2.getData().add(new XYChart.Data<>("delete", bs2[2] / this.inputLenght));
 
-                long[] bs3 = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting).testDelete();
+                long[] bs3 = benFibonacci.testDelete();
                 list.add(new Label("Fibonacci delete min/max: " + bs3[0] + " / " + bs3[1]));
                 series3.getData().add(new XYChart.Data<>("delete", bs3[2] / this.inputLenght));
             }
             if (operation == Operations.DECREASE_KEY) {
-                long[] bs1 = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting).testDecreaseKey();
+                long[] bs1 = benBinary.testDecreaseKey();
                 list.add(new Label("Binary decerease key min/max: " + bs1[0] + " / " + bs1[1]));
                 series1.getData().add(new XYChart.Data<>("decerease key", bs1[2] / this.inputLenght));
 
-                long[] bs2 = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting).testDecreaseKey();
+                long[] bs2 = benBinomial.testDecreaseKey();
                 list.add(new Label("Binomial decerease key min/max: " + bs2[0] + " / " + bs2[1]));
                 series2.getData().add(new XYChart.Data<>("decerease key", bs2[2] / this.inputLenght));
 
-                long[] bs3 = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting).testDecreaseKey();
+                long[] bs3 = benFibonacci.testDecreaseKey();
                 list.add(new Label("Fibonacci decerease key min/max: " + bs3[0] + " / " + bs3[1]));
                 series3.getData().add(new XYChart.Data<>("decerease key", bs3[2] / this.inputLenght));
             }
