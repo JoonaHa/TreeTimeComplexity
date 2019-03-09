@@ -38,14 +38,14 @@ For **Fibonacciheap** because searching for node is again a linear timed operati
 **Note!** that *Binomialheap* *Binaryheap*  have some overhead because both of them use an implementation of arraylist for dynamic sizing, while *Fibonacciheap* uses doubly linked list.
 
 
-![](https://github.com/JoonaHa/TreeTimeComplexity/tree/master/documentation/input4000.png)
-![](https://github.com/JoonaHa/TreeTimeComplexity/tree/master/documentation/input60.png)
+![](https://github.com/JoonaHa/TreeTimeComplexity/blob/master/documentation/input4000.png)
+![](https://github.com/JoonaHa/TreeTimeComplexity/blob/master/documentation/input100.png)
 
 For large (n=4000) or small (n=60) input data Fibonacciheap comes on top with it's decrease key operation.
 
 Also Binomialheap's O(1) amortized add has now match for the real O(1) add of Fibonacciheap. Intrestingly Binaryheap in practice also is consistently faster in add than BinomialHeap. This is propably because Binomialheap's union-operation used in add is basicly O(4(log n)) in my current implementation compared to binary heap's actual O(log n).
 
-![](https://github.com/JoonaHa/TreeTimeComplexity/tree/master/documentation/input60.png)
+![](https://github.com/JoonaHa/TreeTimeComplexity/blob/master/documentation/input60.png)
 
 Binomialheap and Fibonacciheap change top places for pop and delete when heap size is increased even slightly (n=100).
 As metioned before Binomialheap's union-operation is fairly slow for O(log n) which might put it in a disadvantage with smaller data but both of them use O(n) operation findNode() and Binomialheap implementation is slightly better (only recursing to trees if needed) while FibonacciHeap goes trough the whole linked-list. 
@@ -61,6 +61,4 @@ As metioned before Binomialheap's union-operation is fairly slow for O(log n) wh
 * https://github.com/nlfiedler/graphmaker/blob/master/core/src/com/bluemarsh/graphmaker/core/util/FibonacciHeap.java ,
 * https://www.geeksforgeeks.org/binomial-heap-2/ ,
 * CORMEN, THOMAS H. (2009). INTRODUCTION TO ALGORITHMS. United States of America: The MIT Press Cambridge, Massachusetts London, England. 
-
-
 
