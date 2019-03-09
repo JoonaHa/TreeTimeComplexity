@@ -6,6 +6,7 @@ Data structure and algorithm project for TiraLabra19.
 * #### [Project Definition](/documentation/Project_definition.md) 
 * #### [Desing document](/documentation/Design%20document.md) 
 * #### [Testing document](/documentation/Testing%20documentation.md) 
+* #### [Javadoc](/documentation/javadoc)
  ---
 ## Weekly Reports
 * [Week 1](/documentation/Week_1_Report.md)
