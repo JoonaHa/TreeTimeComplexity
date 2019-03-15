@@ -16,6 +16,7 @@
  */
 package main;
 
+import algorithms.IntQuickSort;
 import utils.Operations;
 import algorithms.MinBinaryHeap;
 import algorithms.MinBinomialHeap;
@@ -44,6 +45,7 @@ public class BenchmarkResultGUI {
     private int iterations;
     private Operations[] operations;
     private InputTypes sorting;
+    private int[] benchData;
 
     /**
      * Class for creating barchart window
@@ -58,6 +60,8 @@ public class BenchmarkResultGUI {
         this.iterations = iterations;
         this.operations = operations;
         this.sorting = sorting;
+        //Create test data for bechmarks
+        this.benchData = createTestData(iterations);
 
     }
 
@@ -84,9 +88,9 @@ public class BenchmarkResultGUI {
         series3.setName("Fibonacci Heap");
         ObservableList<Label> list = FXCollections.<Label>observableArrayList();
 
-        Benchmark benBinary = new Benchmark(new MinBinaryHeap(), this.iterations, this.inputLenght, this.sorting);
-        Benchmark benBinomial = new Benchmark(new MinBinomialHeap(), this.iterations, this.inputLenght, this.sorting);
-        Benchmark benFibonacci = new Benchmark(new MinFibonaciHeap(), this.iterations, this.inputLenght, this.sorting);
+        Benchmark benBinary = new Benchmark(new MinBinaryHeap(), this.iterations, this.benchData);
+        Benchmark benBinomial = new Benchmark(new MinBinomialHeap(), this.iterations, this.benchData);
+        Benchmark benFibonacci = new Benchmark(new MinFibonaciHeap(), this.iterations, this.benchData);
 
         for (Operations operation : operations) {
 
@@ -170,6 +174,27 @@ public class BenchmarkResultGUI {
         Scene chartScene = new Scene(cs, 700, 650);
 
         return chartScene;
+    }
+
+    private int[] createTestData(int size) {
+
+        int[] values = new int[size];
+
+        for (int i = 0; i < size; i++) {
+
+            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
+        }
+
+        //sort generated  data based on the instance varibale this.sorting
+        if (this.sorting.equals(InputTypes.ASCENDING)) {
+            values = IntQuickSort.quickSortAscend(values, 0, size - 1);
+        }
+        if (this.sorting.equals(InputTypes.DESCENDING)) {
+            values = IntQuickSort.quickSortDescen(values, 0, size - 1);
+
+        }
+
+        return values;
     }
 
 }

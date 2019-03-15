@@ -16,7 +16,6 @@
  */
 package utils;
 
-import algorithms.IntQuickSort;
 import algorithms.MinHeaps;
 import java.util.stream.LongStream;
 
@@ -30,7 +29,6 @@ public class Benchmark {
     private MinHeaps heap;
     private int[] input;
     private int iterations;
-    private InputTypes sorting;
 
     /**
      * *
@@ -39,16 +37,12 @@ public class Benchmark {
      * @param heap Object to benchmark
      * @param iterations Number of iterations the benchmark will run. The
      * average running time calculation is based on the number of iterations.
-     * @param inputLenght Lenght of randomised input data which will be used for
-     * testing.
-     * @param sorting Is the input data random or in ascending or descending
-     * order.
+     * @param testInput array of int to benchmark on
      */
-    public Benchmark(MinHeaps heap, int iterations, int inputLenght, InputTypes sorting) {
+    public Benchmark(MinHeaps heap, int iterations, int[] testInput) {
         this.heap = heap;
         this.iterations = iterations;
-        this.sorting = sorting;
-        this.input = createTestData(inputLenght);
+        this.input = testInput;
     }
 
     // Public methods for benchmarking specific operations.
@@ -283,25 +277,4 @@ public class Benchmark {
     }
 
     //Generate pseudorandom testdata from last digits of system.nanotime()
-    private int[] createTestData(int size) {
-
-        int[] values = new int[size];
-
-        for (int i = 0; i < size; i++) {
-
-            values[i] = ((int) ((System.nanoTime() % 10000 * 0.0001) * Integer.MAX_VALUE));
-        }
-
-        //sort generated  data based on the instance varibale this.sorting
-        if (this.sorting.equals(InputTypes.ASCENDING)) {
-            values = IntQuickSort.quickSortAscend(values, 0, size - 1);
-        }
-        if (this.sorting.equals(InputTypes.DESCENDING)) {
-            values = IntQuickSort.quickSortDescen(values, 0, size - 1);
-
-        }
-
-        return values;
-    }
-
 }
