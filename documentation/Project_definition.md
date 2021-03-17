@@ -1,6 +1,6 @@
 ## Project Definition
 ### General
-Projects aims to benchmark and illustrate differences between different kind of search trees and heaps. Also to present the advantages of different kind of structures for diffenret kind of data.
+Projects aims to benchmark and illustrate differences between different kind of search heaps. Also to present the advantages of different kind of structures for diffenret kind of data.
 
 ### Data Structures
 The intention is to implement **Binomial heaps**, **Fibonacci heaps** and some classics like basic **Binary heaps**.
